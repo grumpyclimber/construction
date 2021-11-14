@@ -19,14 +19,12 @@ of the night and do a terrible job of it). Some potentially very important peopl
 ```
 That was a lot of commenting, how about this one:
 ```
-
 #lets find every green thing in something, multiply it by 2 and add to a list:
 empty_list = []
 for thing in something:
   if thing == 'green':
     new_thing = thing * 2
     empty_list.append(new_thing)
-
 ```
 5. If you're generating plots - spend an extra few lines of code to make them nicer - it takes 1 line of code to make that plot bigger!
     * btw remember to us plt.show()
@@ -48,3 +46,8 @@ def function (df, colname):
     * [towardsdatascience](https://towardsdatascience.com/how-to-create-a-professional-github-data-science-repository-84e9607644a2
 )
     * [dataquest](https://www.dataquest.io/blog/data-science-project-style-guide/)
+11. At the end of the project (yeah we're back to that point) write a few lines about 
+    * what have you learned
+    * what you're planning to do in the future (but now you're missing time/ skills)
+    * what you've tried but didn't work and it wasn't included in the final version (different approach/ new library?)
+13. Don't try to tick the box with your project, try to make it the best project. I know it's hard you may be at the beginning of the course, maybe this, maybe that. But find something that no one has done before, and do it. Not enough data? Get more! Data is boring and can't find anything interesting? Roll up your sleeves and create the best visualizations you can. It takes time and code... You're bad at coding and can barely understand what on earth you're doing with that code? Write the most descriptive and funny intro and conclusions. Attach a cute photo of your dog. Make them remember your project.
