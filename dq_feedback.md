@@ -1,0 +1,50 @@
+1. Write an intro - what is this project about, steps you're going to take, techniques, libraries you're using etc.
+2. Conclusions, this is the most important part (though like everyone else I like to leave it for the last moment in the middle 
+of the night and do a terrible job of it). Some potentially very important people will skip the whole notebook and
+**read only the conclusions at the very end**. So make them shine.
+3. Merge cells that don't generate any output.
+4. Don't comment too much - creating an empty list or dictionary doesn't require a comment line. Be efficient use 1 comment line per 2,3 or 10 lines of code
+  
+  example:
+  ```
+  # create an empty list:
+  empty_list = []
+  # loop trough something
+  for thing in something:
+    # for every green thing do a thing:
+    if thing == 'green':
+      new_thing = thing * 2
+      # add to the list:
+      empty_list.append(new_thing)
+```
+That was a lot of commenting, how about this one:
+```
+
+#lets find every green thing in something, multiply it by 2 and add to a list:
+empty_list = []
+for thing in something:
+  if thing == 'green':
+    new_thing = thing * 2
+    empty_list.append(new_thing)
+
+```
+5. If you're generating plots - spend an extra few lines of code to make them nicer - it takes 1 line of code to make that plot bigger!
+    * btw remember to us plt.show()
+6. Use functions to reduce code. Eg. if you're generating the same plot every few cells, changing only the column name, maybe write a function for that? 
+```
+def function (df, colname):
+  a = do some_plot_magic_here
+  b = and_here
+  c = some_more_magic
+  return a, b, c 
+  
+ function (df,colname)
+ plt.show()
+ ```
+7. If you're getting a 'SettingWithCopyWarning' you should do something about it, it doesn't look nice on a published notebook
+8. Remove double empty lines, remove empty lines at the end of a cell.
+
+9. To index or not to index? I say index, but it's a matter of personnal preferance. Same goes to import locations, different guides have different opinions:
+    * [towardsdatascience](https://towardsdatascience.com/how-to-create-a-professional-github-data-science-repository-84e9607644a2
+)
+    * [dataquest](https://www.dataquest.io/blog/data-science-project-style-guide/)
