@@ -1,3 +1,5 @@
+Generic feedback to dataquest projects:
+
 1. Write an intro - what is this project about, steps you're going to take, techniques, libraries you're using etc.
 2. Conclusions, this is the most important part (though I like to leave it for the last moment in the middle 
 of the night and do a terrible job of it). Some potentially very important people will skip the whole notebook and
