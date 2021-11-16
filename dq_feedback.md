@@ -46,9 +46,14 @@ def function (df, colname):
     * [towardsdatascience](https://towardsdatascience.com/how-to-create-a-professional-github-data-science-repository-84e9607644a2
 )
     * [dataquest](https://www.dataquest.io/blog/data-science-project-style-guide/)
-11. At the end of the project (yeah we're back to that point) write a few lines about 
+10. At the end of the project (yeah we're back to that point) write a few lines about 
     * what have you learned
     * what are you planning to do in the future (but now you're missing time/ skills)
     * what you've tried but didn't work and it wasn't included in the final version (different approach/ new library?)
-12. Don't try to tick the box with your project, **try to make it the best project.** I know it's hard you may be at the beginning of the course, maybe this, maybe that. But find something that no one has done before, and do it. Not enough data? Get more! Data is boring and can't find anything interesting? Roll up your sleeves and create the best visualizations you can. It takes time and code... You're bad at coding and can barely understand what on earth you're doing with that code? Write the most descriptive and funny intro and conclusions. Attach a cute photo of your dog (sorry no cats allowed). **Make them remember your project.**
+11. Don't try to tick the box with your project, **try to make it the best project.** I know it's hard you may be at the beginning of the course, maybe this, maybe that. But... 
+    * find something that no one has done before, and do it. 
+    * Not enough data? Get more! 
+    * Data is boring and can't find anything interesting? Roll up your sleeves and create the best visualizations you can. 
+    * Out of ideas/ not enough skills? Attach a cute photo of your dog (sorry no cats allowed). 
+    * **Make them remember your project.**
 
