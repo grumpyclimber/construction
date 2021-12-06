@@ -314,21 +314,35 @@ ORDER BY
 # 12. Danny also requires further information about the ranking of customer products, but he purposely does not need the ranking for non-member purchases so he expects null ranking values for the records when customers are not yet part of the loyalty program.
 ```sql
 WITH temp_a AS (
-SELECT sales.customer_id, order_date, product_name, price,
-CASE WHEN sales.order_date >= members.join_date
-THEN 'Y'
-ELSE 'N'
-END AS member
-
-FROM dannys_diner.sales
-FULL OUTER JOIN dannys_diner.menu ON menu.product_id = sales.product_id
-FULL OUTER JOIN dannys_diner.members ON members.customer_id = sales.customer_id
-ORDER BY customer_id, order_date
+  SELECT
+    sales.customer_id,
+    order_date,
+    product_name,
+    price,
+    CASE
+      WHEN sales.order_date >= members.join_date THEN 'Y'
+      ELSE 'N'
+    END AS member
+  FROM
+    dannys_diner.sales FULL
+    OUTER JOIN dannys_diner.menu ON menu.product_id = sales.product_id FULL
+    OUTER JOIN dannys_diner.members ON members.customer_id = sales.customer_id
+  ORDER BY
+    customer_id,
+    order_date
 )
-SELECT *, CASE
-WHEN member = 'Y' THEN RANK() OVER(PARTITION BY customer_id,member ORDER BY order_date)
-END
-FROM temp_a
+SELECT
+  *,
+  CASE
+    WHEN member = 'Y' THEN RANK() OVER(
+      PARTITION BY customer_id,
+      member
+      ORDER BY
+        order_date
+    )
+  END
+FROM
+  temp_a
 
 ```
 
