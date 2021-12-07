@@ -20,7 +20,18 @@ This is the main thread of Guided Projects. It contains all of our Guided Projec
 
 <img width="918" alt="feedback" src="https://user-images.githubusercontent.com/87883118/144956671-3c8dc0bc-1922-4a12-9c73-5e4b549d93af.png">
 
+In this post, Michael published his project and Elena replied with some remarks to his work. We're interested in scraping only the content of Elena's remarks. It is not going to be as easy as scraping one website, because we want to scrape a specific part of many websites, to which we don't have the links...yet. Here's the plan of attack:
+1. We don't have the links to all of the Guided project posts - we need to obtain them, which means we'll have to scrape the main thread of Guided Projects
+2. After scraping the main thread we'll create a dataframe containing posts, titles, links and... number of replies
+3. We'll filter out posts with no replies
+4. The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
 
-
+Step 1:
+```python
+url = "https://community.dataquest.io/c/share/guided-project/55"
+html = urlopen(url)
+soup = BeautifulSoup(html, 'lxml')
+print(soup)
+```
 
 
