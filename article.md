@@ -16,8 +16,7 @@ scraping not one, but many websites. Lets have a look how the actual Guided proj
 
 <img width="942" alt="main" src="https://user-images.githubusercontent.com/87883118/144956101-27b15dc3-4ad2-473f-870a-faa241819d02.png">
 
-This is the main thread of Guided Projects. It contains all the of our Guided Projects, that we've decided to publish. Most of them received a reply with 
-some comments - we're interested in the contents that reply:
+This is the main thread of Guided Projects. It contains all of our Guided Projects, that we've decided to publish. Most of them received a reply with some comments - we're interested in the contents of that reply:
 
 <img width="918" alt="feedback" src="https://user-images.githubusercontent.com/87883118/144956671-3c8dc0bc-1922-4a12-9c73-5e4b549d93af.png">
 
