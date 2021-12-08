@@ -164,7 +164,7 @@ df.head()
 ## Step 3: scraping the individual posts
 This last step is not going to be much different than step 1 of scraping, we have to inspect one indvidual post and deduct which element of the page is responsible for the content of the first reply to the post. We're making an assumption that the most valuable content is going to be stored in the first reply to the published project. We'll ignore all the other replies.
         
-To process this amount of text data we'll create a function. All the heavy data processing is being done inside the function and we don't have to worry about some variables occupying the memory after we're done working with them. **FIND A GOOD ARTICLE ABOUT MEMORY LEAKS PASTE HERE**  
+To process this amount of text data we'll create a function. All the heavy data processing is being done inside the function and we don't have to worry about some variables occupying the memory after we're done working with them. **[[[FIND A GOOD ARTICLE ABOUT MEMORY LEAKS PASTE HERE]]]**  
         
 ```python
 # create a function for scraping the actual posts website:
