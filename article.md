@@ -25,7 +25,7 @@ In this post, Michael published his project and Elena replied with some remarks 
 1. We don't have the links to all of the Guided project posts - we need to obtain them, which means we'll have to scrape the main thread of Guided Projects
 2. After scraping the main thread we'll create a dataframe containing posts, titles, links and... number of replies
   * We'll filter out posts with no replies
-  * The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
+3. The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
 
 ## Step 1:
 
@@ -89,5 +89,64 @@ We have created a dataframe filled with a lot of HTML code. Let's inspect the co
 ```python
 df.loc[2,'content'] 
 ```
-<img width="817" alt="content_dirty" src="https://user-images.githubusercontent.com/87883118/145167073-e75870fa-4c21-4134-9849-617ffe1db9c6.png">
+```html
+<tr class="topic-list-item category-share-guided-project tag-257 tag-sql-fundamentals tag-257-8 has-excerpt 
+unseen-topic ember-view" data-topic-id="558357" id="ember71">\n<td class="main-link clearfix" colspan="">\n
+<div class="topic-details">\n<div class="topic-title">\n<span class="link-top-line">\n<a class="title raw-link
+raw-topic-link" data-topic-id="558357" href="https://community.dataquest.io/t/analyzing-cia-factbook-with-sql-full-project/558357"
+level="2" role="heading"><span dir="ltr">Analyzing CIA Factbook with SQL - Full Project</span></a>\n<span 
+class="topic-post-badges">\xa0<a class="badge badge-notification new-topic" 
+href="https://community.dataquest.io/t/analyzing-cia-factbook-with-sql-full-project/558357" 
+title="new topic"></a></span>\n</span>\n</div>\n<div class="discourse-tags"><a class="discourse-tag bullet"
+data-tag-name="257" href="https://community.dataquest.io/tag/257">257</a> <a class="discourse-tag bullet" 
+data-tag-name="sql-fundamentals" href="https://community.dataquest.io/tag/sql-fundamentals">sql-fundamentals</a>
+ <a class="discourse-tag bullet" data-tag-name="257-8" href="https://community.dataquest.io/tag/257-8">257-8</a>
+ </div>\n<div class="actions-and-meta-data">\n</div>\n</div></td>\n<td class="posters">\n<a class="latest single"
+data-user-card="noah.gampe" href="https://community.dataquest.io/u/noah.gampe"><img alt="" 
+aria-label="noah.gampe - Original Poster, Most Recent Poster" class="avatar latest single" height="25" 
+src="./Latest Share_Guided Project topics - Dataquest Community_files/12175_2.png" 
+title="noah.gampe - Original Poster, Most Recent Poster" width="25"/></a>\n</td>\n<td class="num posts-map posts" 
+title="This topic has 0 replies">\n<button class="btn-link posts-map badge-posts">\n<span 
+aria-label="This topic has 0 replies" class="number">0</span>\n</button>\n</td>\n<td class="num 
+likes">\n</td>\n<td class="num views"><span class="number" title="this topic has been viewed 9 times">9</span>
+ </td>\n<td class="num age activity" title="First post: Nov 20, 2021 9:25 am\nPosted: Nov 20, 2021 9:27 am">\n
+ <a class="post-activity" href="https://community.dataquest.io/t/analyzing-cia-factbook-with-sql-full-project/558357/1">
+  <span class="relative-date" data-format="tiny" data-time="1637360860367">1d</span></a>\n</td>\n</tr>
+```
+How to find order in this madness? We only need 3 elements from the above code (well actually 2, but having a title would be nice).
+The title in the above block of code is "Analyzing CIA Factbook with SQL - Full Project", we can find the title inside the span element:
+```html
+<span dir="ltr">Analyzing CIA Factbook with SQL - Full Project</span>
+ ```
+The previous element is the link we're after:
+```html
+<a class="title raw-link
+raw-topic-link" data-topic-id="558357" href="https://community.dataquest.io/t/analyzing-cia-factbook-with-sql-full-project/558357"
+level="2" role="heading">
+ ```
+ The last bit of information we're after is number of replies for each post:
+```html
+<span aria-label="This topic has 0 replies" class="number">0</span>
+```
+We could use BeautifulSoup to target those specific elements and extract their content, but this dataset is not that big and extracting the information
+we need directly from the cell in the same row seems like a bit safer option. 
+* We'll remove the first row (which is not a post element)
+* then we'll procedd with regex magic to extract the title, link and number of replies
+* we'll remove the rows with 0 replies
 
+```python
+df = df.iloc[1:,:]
+# extract title, link and number of replies:
+df['title'] = df['content'].str.extract('<span dir="ltr">(.*?)</span>')
+df['link'] = df['content'].str.extract('href=(.*?)level="2"')
+df['replies'] = df['content'].str.extract("This topic has (.*?) re").astype(int)
+df.head()
+```
+
+| |	content |title |link	|replies|
+| -----|	----- |----- |-----	|-----|
+|4	|<tr class="topic-list-item category-share-guid...	|Predicting house prices	|https://community.dataquest.io/t/predicting-ho...	|1|
+|5|	<tr class="topic-list-item category-share-guid...	|[Re-upload]Project Feedback - Popular Data Sci...	|https://community.dataquest.io/t/re-upload-pro...	|3|
+|7|	<tr class="topic-list-item category-share-guid...	|GP: Clean and Analyze Employee Exit Surveys ++	|https://community.dataquest.io/t/gp-clean-and-...	|2|
+|10|<tr class="topic-list-item category-share-guid...	|Project Feedback - Popular Data Science Questions	|https://community.dataquest.io/t/project-feedb...	|5|
+|12|	<tr class="topic-list-item category-share-guid...	|Guided Project: Answer to Albums vs. Singles w...	|https://community.dataquest.io/t/guided-projec...	|5|
