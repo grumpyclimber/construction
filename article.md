@@ -24,16 +24,11 @@ This is the main thread of Guided Projects. It contains all of our Guided Projec
 In this post, Michael published his project and Elena replied with some remarks to his work. We're interested in scraping only the content of Elena's remarks. It is not going to be as easy as scraping one website, because we want to scrape a specific part of many websites, to which we don't have the links...yet. Here's the plan of attack:
 1. We don't have the links to all of the Guided project posts - we need to obtain them, which means we'll have to scrape the main thread of Guided Projects
 2. After scraping the main thread we'll create a dataframe containing posts, titles, links and... number of replies
-3. We'll filter out posts with no replies
-4. The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
+  * We'll filter out posts with no replies
+  * The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
 
-Step 1:
-```python
-url = "https://community.dataquest.io/c/share/guided-project/55"
-html = urlopen(url)
-soup = BeautifulSoup(html, 'lxml')
-print(soup)
-```
+## Step 1:
+
 We'll begin with inspecting the contents of the whole website: https://community.dataquest.io/c/share/guided-project/55
 We can use our browser for that, I personally use Chrome. Just hover your mouse above the title of the post right-click it and choose Inspect, (BUT pay attention! 
 I've choosen a post that's a few posts below the top - just in case the first posts has a different class)
@@ -76,4 +71,23 @@ Let's get to scrolling down:
 
 ![20211207_132125](https://user-images.githubusercontent.com/87883118/145162982-e907978a-5ff0-49ca-8830-f377618ddb52.jpg)
 
-Yes that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffe cup (the author of this post doesn't encourage any unordinary use of cutery or dishware around your computer).
+Yes that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffe cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... No we can load that file into our notebook and commence scraping:
+```python
+import codecs
+# this is the file of the website, after scrolling all the way down:
+file = codecs.open("../input/dq-projects/projects.html", "r", "utf-8")
+parser = BeautifulSoup(file, 'html.parser')
+list_all = parser.find_all('tr')
+series_4_df = pd.Series(list_all)
+# create a dataframe with values(title, link, etc.) extracted from the html file:
+df = pd.DataFrame(series_4_df, columns=['content'])
+df['content'] = df['content'].astype(str)
+df.head()
+```
+## We've arrived at step 2
+We have created a dataframe filled with a lot of HTML code. Let's inspect the content of one cell:
+```python
+df.loc[2,'content'] 
+```
+<img width="817" alt="content_dirty" src="https://user-images.githubusercontent.com/87883118/145167073-e75870fa-4c21-4134-9849-617ffe1db9c6.png">
+
