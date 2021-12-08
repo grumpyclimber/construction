@@ -62,7 +62,7 @@ len(list_all)
 ```
 \[Output]: 30
 
-Our list has only 30 elements! We were expecting a bigger number, what happened? Unfortunately we're trying to scrape a dynamic website. (a more [in depth article](https://www.zesty.io/mindshare/marketing-technology/dynamic-vs-static-websites/) on the matter). Dataquest loads only the first 30 posts when our browser opens the forums page, if we want to see more we have to scroll down. But how do we program our scraper to scroll down? [Selenium](https://selenium-python.readthedocs.io/) is a go to solution for that issue but we're going to use something much simpler: 
+Our list has only 30 elements! We were expecting a bigger number, what happened? Unfortunately we're trying to scrape a dynamic website. (a more [in depth article](https://www.zesty.io/mindshare/marketing-technology/dynamic-vs-static-websites/) on the matter). Dataquest loads only the first 30 posts when our browser opens the forums page, if we want to see more we have to scroll down. But how do we program our scraper to scroll down? [Selenium](https://selenium-python.readthedocs.io/) is a go-to solution for that issue but we're going to use something much simpler: 
 * scroll down to the bottom of the website
 * when we reach the end save the website as file
 * instead of processing a website with BeautifulSoup, we'll process that file
@@ -71,7 +71,7 @@ Let's get to scrolling down:
 
 ![20211207_132125](https://user-images.githubusercontent.com/87883118/145162982-e907978a-5ff0-49ca-8830-f377618ddb52.jpg)
 
-Yes that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffe cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... No we can load that file into our notebook and commence scraping:
+Yes that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffee cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... Now we can load that file into our notebook and commence scraping:
 ```python
 import codecs
 # this is the file of the website, after scrolling all the way down:
@@ -131,7 +131,7 @@ level="2" role="heading">
 We could use BeautifulSoup to target those specific elements and extract their content, but this dataset is not that big and extracting the information
 we need directly from the cell in the same row seems like a bit safer option. 
 * We'll remove the first row (which is not a post element)
-* then we'll procedd with regex magic to extract the title, link and number of replies
+* then we'll proceed with regex magic to extract the title, link and number of replies
 * we'll remove the rows with 0 replies
 
 ```python
@@ -150,7 +150,7 @@ df = df[df['replies']>0]
 df = df[df['replies']<100]
 df.head()
 ```
-<!-- 
+
 | |	content |title |link	|replies|views|
 | -----|	----- |----- |-----	|-----|-----|
 |4	|<tr class="topic-list-item category-share-guid...	|Predicting house prices	|https://community.dataquest.io/t/predicting-ho...	|1|26|
@@ -159,10 +159,10 @@ df.head()
 |10|<tr class="topic-list-item category-share-guid...	|Project Feedback - Popular Data Science Questions	|https://community.dataquest.io/t/project-feedb...	|5|71|
 |12|	<tr class="topic-list-item category-share-guid...	|Guided Project: Answer to Albums vs. Singles w...	|https://community.dataquest.io/t/guided-projec...|5|370|
 
-         -->
+        
 
 ## Step 3: scraping the individual posts
-This last step is not going to be much different than step 1 of scraping, we have to inspect one indvidual post and deduct which element of the page is responsible for the content of the first reply to the post. We're making an assumption that the most valuable content is going to be stored in the first reply to the published project. We'll ignore all the other replies.
+This last step is not going to be much different than step 1 of scraping, we have to inspect one individual post and deduct which element of the page is responsible for the content of the first reply to the post. We're making an assumption that the most valuable content is going to be stored in the first reply to the published project. We'll ignore all the other replies.
         
 To process this amount of text data we'll create a function. All the heavy data processing is being done inside the function and we don't have to worry about some variables occupying the memory after we're done working with them. **[[[FIND A GOOD ARTICLE ABOUT MEMORY LEAKS PASTE HERE]]]**  
         
@@ -207,7 +207,7 @@ df_test['feedback'][4]
 ```
 '\nprocessing data inside a function saves memory (the variables you create stay inside the function and are not stored in memory, when you’re done with the function) it’s important when you’re working with larger datasets - if you’re interested with experimenting:\nhttps://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page\nTry cleaning 1 month of this dataset on kaggle notebook (and look at your RAM usage) outside the function and inside the function, compare the RAM usage in both examples\n'
 
-Whole reply, ready for cleaning. Now lets move on to a bigger boat:
+Whole reply, ready for cleaning. Now let's move on to a bigger boat:
 ```python
 # this lets scrape all the posts, not just 5 of them:
 def scrape_replies(df):
