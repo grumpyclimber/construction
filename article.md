@@ -135,21 +135,88 @@ we need directly from the cell in the same row seems like a bit safer option.
 * we'll remove the rows with 0 replies
 
 ```python
+# remove 1st row:
 df = df.iloc[1:,:]
+
 # extract title, link and number of replies:
 df['title'] = df['content'].str.extract('<span dir="ltr">(.*?)</span>')
 df['link'] = df['content'].str.extract('href=(.*?)level="2"')
 df['replies'] = df['content'].str.extract("This topic has (.*?) re").astype(int)
 df['views'] = df['content'].str.extract("this topic has been viewed (.*?) times")
 df['views'] = df['views'].str.replace(',','').astype(int)
+
+# remove 1 generic post and posts with 0 replies:
+df = df[df['replies']>0]
+df = df[df['replies']<100]
 df.head()
 ```
-
+<!-- 
 | |	content |title |link	|replies|views|
 | -----|	----- |----- |-----	|-----|-----|
 |4	|<tr class="topic-list-item category-share-guid...	|Predicting house prices	|https://community.dataquest.io/t/predicting-ho...	|1|26|
 |5|	<tr class="topic-list-item category-share-guid...	|[Re-upload]Project Feedback - Popular Data Sci...	|https://community.dataquest.io/t/re-upload-pro...	|3|47|
 |7|	<tr class="topic-list-item category-share-guid...	|GP: Clean and Analyze Employee Exit Surveys ++	|https://community.dataquest.io/t/gp-clean-and-...	|2|53|
 |10|<tr class="topic-list-item category-share-guid...	|Project Feedback - Popular Data Science Questions	|https://community.dataquest.io/t/project-feedb...	|5|71|
-|12|	<tr class="topic-list-item category-share-guid...	|Guided Project: Answer to Albums vs. Singles w...	|https://community.dataquest.io/t/guided-projec...	|5|370|
+|12|	<tr class="topic-list-item category-share-guid...	|Guided Project: Answer to Albums vs. Singles w...	|https://community.dataquest.io/t/guided-projec...|5|370|
 
+         -->
+
+## Step 3: scraping the individual posts
+This last step is not going to be much different than step 1 of scraping, we have to inspect one indvidual post and deduct which element of the page is responsible for the content of the first reply to the post. We're making an assumption that the most valuable content is going to be stored in the first reply to the published project. We'll ignore all the other replies.
+        
+To process this amount of text data we'll create a function. All the heavy data processing is being done inside the function and we don't have to worry about some variables occupying the memory after we're done working with them. **FIND A GOOD ARTICLE ABOUT MEMORY LEAKS PASTE HERE**  
+        
+```python
+# create a function for scraping the actual posts website:
+def get_reply(one_link):
+    response = requests.get(one_link)
+    content = response.content
+    parser = BeautifulSoup(content, 'html.parser')
+    tag_numbers = parser.find_all("div", class_="post")
+    # we're only going to scrape the content of the first reply (that's usually the feedback)
+    feedback = tag_numbers[1].text
+    return feedback
+```
+Here's a very important rule I follow whenever performing web-scraping:
+START SMALL!
+
+You don't want to scrape a few thousand websites just to learn that your last line of code didn't work and you have to redo everything and wait again. That is why we'll start with a very small dataset, check if everything is clicking, then move on to deeper waters.
+
+```python
+# create a test dataframe to test scraping on 2 rows:
+df_test = df[:5].copy()
+
+# we'll use a loop on all the elements of pd.Series (faster than using 'apply')
+feedback_list = []
+for el in df_test['link2']:
+    feedback_list.append(get_reply(el))
+df_test['feedback'] = feedback_list
+df_test
+ ```
+|index|'feedback'|
+|---|---|
+|4|     \nprocessing data inside a function saves memo...|
+|5|     \nHi,\nI’ve been going through your project an...|
+|7|     \n\n\nnoticed that you’re deleting objects, af...|
+|10|            \nthink you forgot to attach your file…\n|
+|12|    \n@gdelaserre: recategorized your topic. The E...|
+
+Looks promising, let's check the whole cell:
+```python
+df_test['feedback'][4]
+```
+'\nprocessing data inside a function saves memory (the variables you create stay inside the function and are not stored in memory, when you’re done with the function) it’s important when you’re working with larger datasets - if you’re interested with experimenting:\nhttps://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page\nTry cleaning 1 month of this dataset on kaggle notebook (and look at your RAM usage) outside the function and inside the function, compare the RAM usage in both examples\n'
+
+Whole reply, ready for cleaning. Now lets move on to a bigger boat:
+```python
+# this lets scrape all the posts, not just 5 of them:
+def scrape_replies(df):
+    feedback_list = []
+    for el in df['link']:
+        feedback_list.append(get_reply(el))
+    df['feedback'] = feedback_list
+    return df
+    
+df = scrape_replies(df)
+df.head()
+```
