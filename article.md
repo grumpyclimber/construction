@@ -152,7 +152,7 @@ df.head()
 ```
 
 | |	content |title |link	|replies|views|
-| -----|	----- |----- |-----	|-----|-----|
+| -----|	------------------------------------------------- |--------------------------------------------------------------------- |-----	|-----|-----|
 |4	|<tr class="topic-list-item category-share-guid...	|Predicting house prices	|https://community.dataquest.io/t/predicting-ho...	|1|26|
 |5|	<tr class="topic-list-item category-share-guid...	|[Re-upload]Project Feedback - Popular Data Sci...	|https://community.dataquest.io/t/re-upload-pro...	|3|47|
 |7|	<tr class="topic-list-item category-share-guid...	|GP: Clean and Analyze Employee Exit Surveys ++	|https://community.dataquest.io/t/gp-clean-and-...	|2|53|
