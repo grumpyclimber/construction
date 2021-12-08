@@ -38,5 +38,6 @@ I've choosen a post that's a few posts below the top - just in case the first po
 
 Now we can actually look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the \<tr data-topic-id=...> :
 
-<img width="1133" alt="inspect_code" src="https://user-images.githubusercontent.com/87883118/144968777-65fce839-b79b-4b15-b4af-0e9505906f73.png">
+<img width="1092" alt="inspect" src="https://user-images.githubusercontent.com/87883118/145134328-abb52874-0bc5-4bc9-a952-662d44fe00d6.png">
+
 
