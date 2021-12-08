@@ -36,7 +36,7 @@ I've choosen a post that's a few posts below the top - just in case the first po
 
 <img width="1132" alt="right_click" src="https://user-images.githubusercontent.com/87883118/144968155-70f5aee1-092d-4cda-bfa2-3c9162c6345c.png">
 
-Now we can actually look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the <tr data-topic-id=...> :
+Now we can actually look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the \<tr data-topic-id=...> :
 
 <img width="1133" alt="inspect_code" src="https://user-images.githubusercontent.com/87883118/144968777-65fce839-b79b-4b15-b4af-0e9505906f73.png">
 
