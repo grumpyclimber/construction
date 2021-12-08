@@ -140,13 +140,16 @@ df = df.iloc[1:,:]
 df['title'] = df['content'].str.extract('<span dir="ltr">(.*?)</span>')
 df['link'] = df['content'].str.extract('href=(.*?)level="2"')
 df['replies'] = df['content'].str.extract("This topic has (.*?) re").astype(int)
+df['views'] = df['content'].str.extract("this topic has been viewed (.*?) times")
+df['views'] = df['views'].str.replace(',','').astype(int)
 df.head()
 ```
 
-| |	content |title |link	|replies|
-| -----|	----- |----- |-----	|-----|
-|4	|<tr class="topic-list-item category-share-guid...	|Predicting house prices	|https://community.dataquest.io/t/predicting-ho...	|1|
-|5|	<tr class="topic-list-item category-share-guid...	|[Re-upload]Project Feedback - Popular Data Sci...	|https://community.dataquest.io/t/re-upload-pro...	|3|
-|7|	<tr class="topic-list-item category-share-guid...	|GP: Clean and Analyze Employee Exit Surveys ++	|https://community.dataquest.io/t/gp-clean-and-...	|2|
-|10|<tr class="topic-list-item category-share-guid...	|Project Feedback - Popular Data Science Questions	|https://community.dataquest.io/t/project-feedb...	|5|
-|12|	<tr class="topic-list-item category-share-guid...	|Guided Project: Answer to Albums vs. Singles w...	|https://community.dataquest.io/t/guided-projec...	|5|
+| |	content |title |link	|replies|views|
+| -----|	----- |----- |-----	|-----|-----|
+|4	|<tr class="topic-list-item category-share-guid...	|Predicting house prices	|https://community.dataquest.io/t/predicting-ho...	|1|26|
+|5|	<tr class="topic-list-item category-share-guid...	|[Re-upload]Project Feedback - Popular Data Sci...	|https://community.dataquest.io/t/re-upload-pro...	|3|47|
+|7|	<tr class="topic-list-item category-share-guid...	|GP: Clean and Analyze Employee Exit Surveys ++	|https://community.dataquest.io/t/gp-clean-and-...	|2|53|
+|10|<tr class="topic-list-item category-share-guid...	|Project Feedback - Popular Data Science Questions	|https://community.dataquest.io/t/project-feedb...	|5|71|
+|12|	<tr class="topic-list-item category-share-guid...	|Guided Project: Answer to Albums vs. Singles w...	|https://community.dataquest.io/t/guided-projec...	|5|370|
+
