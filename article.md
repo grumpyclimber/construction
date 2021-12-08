@@ -31,7 +31,7 @@ In this post, Michael published his project and Elena replied with some remarks 
 
 We'll begin with inspecting the contents of the whole website: https://community.dataquest.io/c/share/guided-project/55
 We can use our browser for that, I personally use Chrome. Just hover your mouse above the title of the post right-click it and choose Inspect, (BUT pay attention! 
-I've choosen a post that's a few posts below the top - just in case the first posts has a different class)
+I've chosen a post that's a few posts below the top - just in case the first posts has a different class)
 <!-- 
 <img width="1132" alt="right_click" src="https://user-images.githubusercontent.com/87883118/144968155-70f5aee1-092d-4cda-bfa2-3c9162c6345c.png">
  -->
