@@ -261,7 +261,7 @@ df_test['feedback'][4]
 ```
 '\nprocessing data inside a function saves memory (the variables you create stay inside the function and are not stored in memory, when you’re done with the function) it’s important when you’re working with larger datasets - if you’re interested with experimenting:\nhttps://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page\nTry cleaning 1 month of this dataset on kaggle notebook (and look at your RAM usage) outside the function and inside the function, compare the RAM usage in both examples\n'
 
-Whole reply, ready for cleaning. Now let's move on to a bigger boat:
+Whole reply, ready for cleaning. Now let's move on to a bigger boat (this will take a while):
 ```python
 # this lets scrape all the posts, not just 5 of them:
 def scrape_replies(df):
@@ -272,5 +272,5 @@ def scrape_replies(df):
     return df
     
 df = scrape_replies(df)
-df.head()
 ```
+That's it, we've extracted all the raw data we've wanted from the dataquests websites. In the next post we'll focus on cleaning and analyzing this data using natural language processing techniques. 
