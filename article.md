@@ -2,7 +2,7 @@
 
 # Title
 
-Do you share your projects in the Dataquest community? I do!  I have benefited a lot from various people sharing their insights on my work. As I've progressed, I've started giving back and showing other people what I would have done differently in their notebooks. I've even started writing a generic post about the most important comments on our projects. This led me to the idea of extracting all the feedback data and gathering it in one dataset.  
+Do you share your projects in the Dataquest community? I do!  I have benefited a lot from various people sharing their insights on my work. As I've progressed, I've started giving back and showing other people what I would have done differently in their notebooks. I've even started writing a generic post about the most important comments on our projects. This led me to the idea of extracting all the feedback data and gathering it in one dataset. This article is a the first post in series of posts describing my NLP project.
 
 I have divided this project into three stages, all of them are not that complicated on their own. But as we combine them together, it starts to look interesting:
 
@@ -113,7 +113,7 @@ likes">\n</td>\n<td class="num views"><span class="number" title="this topic has
  <a class="post-activity" href="https://community.dataquest.io/t/analyzing-cia-factbook-with-sql-full-project/558357/1">
   <span class="relative-date" data-format="tiny" data-time="1637360860367">1d</span></a>\n</td>\n</tr>
 ```
-How to find order in this madness? We only need 3 elements from the above code (well actually 2, but having a title would be nice).
+How to find order in this madness? We only need 2 elements from the above code (but we'll try to extract more).
 The title in the above block of code is "Analyzing CIA Factbook with SQL - Full Project", we can find the title inside the span element:
 ```html
 <span dir="ltr">Analyzing CIA Factbook with SQL - Full Project</span>
