@@ -118,14 +118,26 @@ Yes that is an actual fork pushing down the 'down arrow' on the keyboard, weight
 import codecs
 # this is the file of the website, after scrolling all the way down:
 file = codecs.open("../input/dq-projects/projects.html", "r", "utf-8")
+# parse the file:
 parser = BeautifulSoup(file, 'html.parser')
+
+# look for every 'tr' tag, scrape its contents and create a pandas series from the list:
 list_all = parser.find_all('tr')
 series_4_df = pd.Series(list_all)
-# create a dataframe with values(title, link, etc.) extracted from the html file:
+
+# create a dataframe from pandas series:
 df = pd.DataFrame(series_4_df, columns=['content'])
 df['content'] = df['content'].astype(str)
 df.head()
 ```
+||content|
+|----|----|
+|0|```<tr><th class="default" data-sort-order="defau...```|
+|1|```<tr class="topic-list-item category-share-guid...```|
+|2|```<tr class="topic-list-item category-share-guid...```|
+|3|```<tr class="topic-list-item category-share-guid...```|
+|4|```<tr class="topic-list-item category-share-guid...```|
+
 ## We've arrived at step 2
 We have created a dataframe filled with a lot of HTML code. Let's inspect the content of one cell:
 ```python
@@ -225,7 +237,7 @@ START SMALL!
 You don't want to scrape a few thousand websites just to learn that your last line of code didn't work and you have to redo everything and wait again. That is why we'll start with a very small dataset, check if everything is clicking, then move on to deeper waters.
 
 ```python
-# create a test dataframe to test scraping on 2 rows:
+# create a test dataframe to test scraping on 5 rows:
 df_test = df[:5].copy()
 
 # we'll use a loop on all the elements of pd.Series (faster than using 'apply')
