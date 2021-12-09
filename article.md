@@ -2,17 +2,24 @@
 
 # Title
 
-Do you share your projects in the Dataquest community? I do!  I have benefited a lot from various people sharing their insights on my work. As I've progressed, I've started giving back and showing other people what I would have done differently in their notebooks. I've even started writing a generic post about the most important comments on our projects. This led me to the idea of extracting all the feedback data and gathering it in one dataset. This article is a the first post in series of posts describing my NLP project.
+Do you share your projects in the Dataquest community? I do!  I have benefited a lot from various people sharing their insights on my work. As I've progressed, I've started giving back and showing other people what I would have done differently in their notebooks. I've even started writing a generic post about the most important comments on our projects. This led me to the idea of an interesting project: 
+* extract all the feedback data and gather it in one dataset
+* analyze the dataset
+* using machine learning to enhance the analysis. 
+* 
+This article is a the first post in series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and regex usage in cleaning data. We'll focus on web scraping so elementary HTML is very helpful, but you should survive without it.
 
 I have divided this project into three stages, all of them are not that complicated on their own. But as we combine them together, it starts to look interesting:
 
 * Part 1: Scrape the data - we'll use the Beautiful Soup library to gather all the necessary string values from the website and store them in a pandas dataframe.
-* Part 2: Clean and analyse the data - we should be well accustomed to this part. Webscraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll have to deal with that.
+* Part 2: Clean and analyse the data - we should be well accustomed to this part. Webscraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into something more useful.
 * Part 3: Use machine learning models on the data. Why perform the analysis yourself, when you can send the machine to do that work for you?
 
 Let's get to work:
 # Part 1 - scraping the data from Dataquest's community forum
-If you haven't used BeautifulSoup yet, then I encourage you to check my introduction notebook. It follows a similar path that we're going to take: scraping not one, but many websites. Let's have a look at how the actual Guided project post looks, so we can have a better idea on what we want to achieve:
+If you haven't used BeautifulSoup yet, then I encourage you to check my introduction notebook. It follows a similar path that we're going to take: scraping not one, but many websites. 
+
+Let's have a look at how the actual Guided project post looks, so we can have a better idea on what we want to achieve:
 
 <img width="942" alt="main" src="https://user-images.githubusercontent.com/87883118/144956101-27b15dc3-4ad2-473f-870a-faa241819d02.png">
 
@@ -27,11 +34,44 @@ In this post, Michael published his project and Elena replied with some remarks 
   * We'll filter out posts with no replies
 3. The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
 
+## Very basic HTML intro:
+
+Before we start, have you ever seen a HTML code? It differs from Python. If you've never experienced HTML code, here's a very basic example of a table in HTML:
+```html
+<html>
+<body>
+<table border=1>
+  <tr>
+    <td>Emil</td>
+    <td>Tobias</td>
+   <td><a href="https://www.dataquest.io/">dataquest</a></td>
+  </tr>
+</table>
+ </body>
+ </html>
+```
+<html>
+<body>
+<table border=1>
+  <tr>
+    <td>Emil</td>
+    <td>Tobias</td>
+   <td><a href="https://www.dataquest.io/">dataquest</a></td>
+  </tr>
+</table>
+ </body>
+ </html>
+ In HTML we use tags to define elements. Many elements have an opening tag and a closing tag — for example '<table>' opens up the building of a table and at the very end of coding the table we write </table> to close it. This table has 1 row (have you guessed it's '<tr>' for a row) and 3 cells in that row. In the third cell we've spiced up the atmosphere a little - we used a link ('<a href=...>). HTML tags can have atributes (we've used 'border' atribute in 'table' tag and href atribute in 'a' tag).    
+
+
+The whole concept of webscraping is to extract (scrape) specific element of a website.
 ## Step 1:
 
 We'll begin with inspecting the contents of the whole website: https://community.dataquest.io/c/share/guided-project/55
 We can use our browser for that, I personally use Chrome. Just hover your mouse above the title of the post right-click it and choose Inspect, (BUT pay attention! 
-I've chosen a post that's a few posts below the top - just in case the first posts has a different class)
+I've chosen a post that's a few posts below the top - just in case the first posts has a different class). 
+
+
 <!-- 
 <img width="1132" alt="right_click" src="https://user-images.githubusercontent.com/87883118/144968155-70f5aee1-092d-4cda-bfa2-3c9162c6345c.png">
  -->
