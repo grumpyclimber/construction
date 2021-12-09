@@ -6,7 +6,7 @@ Do you share your projects in the Dataquest community? I do!  I have benefited a
 * extract all the feedback data and gather it in one dataset
 * analyze the dataset
 * using machine learning to enhance the analysis. 
-* 
+
 This article is a the first post in series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and regex usage in cleaning data. We'll focus on web scraping so elementary HTML is very helpful, but you should survive without it.
 
 I have divided this project into three stages, all of them are not that complicated on their own. But as we combine them together, it starts to look interesting:
@@ -56,47 +56,48 @@ Before we start, have you ever seen a HTML code? It differs from Python. If you'
   <tr>
     <td>Emil</td>
     <td>Tobias</td>
-   <td><a href="https://www.dataquest.io/">dataquest</a></td>
+    <td><a href="https://www.dataquest.io/">dataquest</a></td>
   </tr>
 </table>
- </body>
- </html>
- In HTML we use tags to define elements. Many elements have an opening tag and a closing tag — for example '<table>' opens up the building of a table and at the very end of coding the table we write </table> to close it. This table has 1 row (have you guessed it's '<tr>' for a row) and 3 cells in that row. In the third cell we've spiced up the atmosphere a little - we used a link ('<a href=...>). HTML tags can have atributes (we've used 'border' atribute in 'table' tag and href atribute in 'a' tag).    
+</body>
+</html>
+ 
+In HTML we use tags to define elements. Many elements have an opening tag and a closing tag — for an example ```<table>``` opens up the building of a table and at the very end of coding the table we write ```</table>``` to close it. This table has 1 row (have you guessed it's ```<tr>``` for a row?) and 3 cells in that row. In the third cell we've spiced up the atmosphere a little - we used a link (```<a href=...>```). HTML tags can have atributes (we've used 'border' atribute in 'table' tag and 'href' atribute in 'a' tag).    
 
+The whole concept of webscraping is to extract (scrape) specific elements of a website.
 
-The whole concept of webscraping is to extract (scrape) specific element of a website.
 ## Step 1:
 
 We'll begin with inspecting the contents of the whole website: https://community.dataquest.io/c/share/guided-project/55
 We can use our browser for that, I personally use Chrome. Just hover your mouse above the title of the post right-click it and choose Inspect, (BUT pay attention! 
 I've chosen a post that's a few posts below the top - just in case the first posts has a different class). 
 
-
-<!-- 
-<img width="1132" alt="right_click" src="https://user-images.githubusercontent.com/87883118/144968155-70f5aee1-092d-4cda-bfa2-3c9162c6345c.png">
- -->
-Now we can actually look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the \<tr data-topic-id=...> :
+Now we can actually look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the ```<tr data-topic-id=...>``` and on the left side we can observe a big chunk of the website being highlighted:
 
 <img width="1092" alt="inspect" src="https://user-images.githubusercontent.com/87883118/145134328-abb52874-0bc5-4bc9-a952-662d44fe00d6.png">
 
-You can notice that the actual link has a class 'title raw-link raw-topic-link', it's in the second line of the code below:
+For our first attempt we'll try to obtain only the links of every post. You can notice that the actual link has a class 'title raw-link raw-topic-link', it's in the second line of the code below:
 
 ```html
 <a href="/t/predicting-bike-rentals-with-machine-learning-optimization-of-the-linear-model/558618/3" role="heading"
    level="2" class="title raw-link raw-topic-link" data-topic-id="558618"><span dir="ltr">Predicting Bike Rentals 
   With Machine Learning, Optimization of the Linear Model</span></a>
 ```
-For a warm up let's try scraping all the links with that class into one list and see how many we've managed to extract:
+We'll use the below code to scrape all the links with that class into one list and see how many we've managed to extract:
 
 ```python
 # imports:
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
+
 # step 1 lets scrape the guided project website with all the posts:
 url = "https://community.dataquest.io/c/share/guided-project/55"
 html = urlopen(url)
 soup = BeautifulSoup(html, 'html.parser')
-list_all = soup.find_all("tr")
+
+# look for every 'a' tag with 'class' title raw-link raw-topic-link:
+list_all = soup.find_all("a", class_="title raw-link raw-topic-link")
+
 # check how many elements we've extracted:
 len(list_all)
 ```
@@ -105,13 +106,14 @@ len(list_all)
 Our list has only 30 elements! We were expecting a bigger number, what happened? Unfortunately we're trying to scrape a dynamic website. (a more [in depth article](https://www.zesty.io/mindshare/marketing-technology/dynamic-vs-static-websites/) on the matter). Dataquest loads only the first 30 posts when our browser opens the forums page, if we want to see more we have to scroll down. But how do we program our scraper to scroll down? [Selenium](https://selenium-python.readthedocs.io/) is a go-to solution for that issue but we're going to use something much simpler: 
 * scroll down to the bottom of the website
 * when we reach the end save the website as file
-* instead of processing a website with BeautifulSoup, we'll process that file
+* instead of processing a link with BeautifulSoup, we'll process that file
 
 Let's get to scrolling down:
 
 ![20211207_132125](https://user-images.githubusercontent.com/87883118/145162982-e907978a-5ff0-49ca-8830-f377618ddb52.jpg)
 
-Yes that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffee cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... Now we can load that file into our notebook and commence scraping:
+Yes that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffee cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... Now we can load that file into our notebook and commence scraping, this time we'll target every new row ```tr```. Because ultimately we're not interested in scraping just the links, we want to extract as much data as possible. As you remember when we hovered the mouse cursor over ```<tr ...>``` tag a lot has been highlighted. Not only the title, with link, but also amount of replies, views etc.
+
 ```python
 import codecs
 # this is the file of the website, after scrolling all the way down:
