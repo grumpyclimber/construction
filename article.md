@@ -247,13 +247,13 @@ for el in df_test['link2']:
 df_test['feedback'] = feedback_list
 df_test
  ```
-|index|'feedback'|
+<!-- |index|feedback|
 |---|---|
 |4|     \nprocessing data inside a function saves memo...|
 |5|     \nHi,\nI’ve been going through your project an...|
 |7|     \n\n\nnoticed that you’re deleting objects, af...|
 |10|            \nthink you forgot to attach your file…\n|
-|12|    \n@gdelaserre: recategorized your topic. The E...|
+|12|    \n@gdelaserre: recategorized your topic. The E...| -->
 
 Looks promising, let's check the whole cell:
 ```python
@@ -273,4 +273,9 @@ def scrape_replies(df):
     
 df = scrape_replies(df)
 ```
+
 That's it, we've extracted all the raw data we've wanted from the dataquests websites. In the next post we'll focus on cleaning and analyzing this data using natural language processing techniques. 
+
+Things to consider:
+* scraping tool - BeautifulSoup is a great library to start with, but you've probably noticed that we've already came across it's limitations, to perform web scraping on complex dynamic websites we should a more advanced tool (eg. Selenium)
+* 
