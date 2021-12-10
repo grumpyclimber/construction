@@ -274,8 +274,24 @@ def scrape_replies(df):
 df = scrape_replies(df)
 ```
 
-That's it, we've extracted all the raw data we've wanted from the dataquests websites. In the next post we'll focus on cleaning and analyzing this data using natural language processing techniques. 
+That's it, we've extracted all the raw data we've wanted from the dataquests websites. In the next post we'll focus on cleaning and analyzing this data using natural language processing techniques.  
 
 Things to consider:
-* scraping tool - BeautifulSoup is a great library to start with, but you've probably noticed that we've already came across it's limitations, to perform web scraping on complex dynamic websites we should a more advanced tool (eg. Selenium)
-* 
+* scraping tool - BeautifulSoup is a great library to start with, but you've probably noticed that we've already came across it's limitations, to perform web scraping on complex dynamic websites we should use a more advanced tool (We'll try to cover Selenium library in the future)
+* memory usage
+* internet transfer
+* Consider the server if you're constantly requesting a LOT of content from a website, most of the servers will pick up on it and very often cut you off. In our specific example, we asked for a big chunk of data an  but it's a good habbit to stop the web-scraping 
+
+```
+```python
+# this lets scrape all the posts, not just 5 of them:
+def scrape_replies(df):
+    feedback_list = []
+    for el in df['link']:
+        feedback_list.append(get_reply(el))
+    df['feedback'] = feedback_list
+    return df
+    
+df = scrape_replies(df)
+```
+```
