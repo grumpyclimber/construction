@@ -7,9 +7,9 @@ Do you share your projects in the Dataquest community? I do!  I have benefited a
 * analyze the dataset
 * using machine learning to enhance the analysis. 
 
-This article is a the first post in series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and regex usage in cleaning data. We'll focus on web scraping so elementary HTML is very helpful, but you should survive without it.
+This article is the first post in a series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and regex usage in cleaning data. We'll focus on web scraping so elementary HTML is very helpful, but you should survive without it.
 
-I have divided this project into three stages, all of them are not that complicated on their own. But as we combine them together, it starts to look interesting:
+I have divided this project into three stages, all of them are not that complicated on their own. But as we combine them, it starts to look interesting:
 
 * Part 1: Scrape the data - we'll use the Beautiful Soup library to gather all the necessary string values from the website and store them in a pandas dataframe.
 * Part 2: Clean and analyse the data - we should be well accustomed to this part. Webscraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into something more useful.
@@ -19,7 +19,7 @@ Let's get to work:
 # Part 1 - scraping the data from Dataquest's community forum
 If you haven't used BeautifulSoup yet, then I encourage you to check my introduction notebook. It follows a similar path that we're going to take: scraping not one, but many websites. 
 
-Let's have a look at how the actual Guided project post looks, so we can have a better idea on what we want to achieve:
+Let's have a look at how the actual Guided project post looks, so we can have a better idea of what we want to achieve:
 
 <img width="942" alt="main" src="https://user-images.githubusercontent.com/87883118/144956101-27b15dc3-4ad2-473f-870a-faa241819d02.png">
 
@@ -62,7 +62,7 @@ Before we start, have you ever seen a HTML code? It differs from Python. If you'
 </body>
 </html>
  
-In HTML we use tags to define elements. Many elements have an opening tag and a closing tag — for an example ```<table>``` opens up the building of a table and at the very end of coding the table we write ```</table>``` to close it. This table has 1 row (have you guessed it's ```<tr>``` for a row?) and 3 cells in that row. In the third cell we've spiced up the atmosphere a little - we used a link (```<a href=...>```). HTML tags can have atributes (we've used 'border' atribute in 'table' tag and 'href' atribute in 'a' tag).    
+In HTML we use tags to define elements. Many elements have an opening tag and a closing tag — for example ```<table>``` opens up the building of a table and at the very end of coding the table, we write ```</table>``` to close it. This table has 1 row (have you guessed it's ```<tr>``` for a row?) and 3 cells in that row. In the third cell we've spiced up the atmosphere a little - we used a link (```<a href=...>```). HTML tags can have attributes (we've used 'border' attribute in 'table' tag and 'href' attribute in 'a' tag).   
 
 The whole concept of webscraping is to extract (scrape) specific elements of a website.
 
@@ -72,7 +72,7 @@ We'll begin with inspecting the contents of the whole website: https://community
 We can use our browser for that, I personally use Chrome. Just hover your mouse above the title of the post right-click it and choose Inspect, (BUT pay attention! 
 I've chosen a post that's a few posts below the top - just in case the first posts has a different class). 
 
-Now we can actually look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the ```<tr data-topic-id=...>``` and on the left side we can observe a big chunk of the website being highlighted:
+Now we can look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the ```<tr data-topic-id=...>``` and on the left side we can observe a big chunk of the website being highlighted:
 
 <img width="1092" alt="inspect" src="https://user-images.githubusercontent.com/87883118/145134328-abb52874-0bc5-4bc9-a952-662d44fe00d6.png">
 
@@ -105,14 +105,14 @@ len(list_all)
 
 Our list has only 30 elements! We were expecting a bigger number, what happened? Unfortunately we're trying to scrape a dynamic website. (a more [in depth article](https://www.zesty.io/mindshare/marketing-technology/dynamic-vs-static-websites/) on the matter). Dataquest loads only the first 30 posts when our browser opens the forums page, if we want to see more we have to scroll down. But how do we program our scraper to scroll down? [Selenium](https://selenium-python.readthedocs.io/) is a go-to solution for that issue but we're going to use something much simpler: 
 * scroll down to the bottom of the website
-* when we reach the end save the website as file
+* when we reach the end save the website as a file
 * instead of processing a link with BeautifulSoup, we'll process that file
 
 Let's get to scrolling down:
 
 ![20211207_132125](https://user-images.githubusercontent.com/87883118/145162982-e907978a-5ff0-49ca-8830-f377618ddb52.jpg)
 
-Yes that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffee cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... Now we can load that file into our notebook and commence scraping, this time we'll target every new row ```tr```. Because ultimately we're not interested in scraping just the links, we want to extract as much data as possible. As you remember when we hovered the mouse cursor over ```<tr ...>``` tag a lot has been highlighted. Not only the title, with link, but also amount of replies, views etc.
+Yes, that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffee cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... Now we can load that file into our notebook and commence scraping, this time we'll target every new row ```tr```. Because ultimately we're not interested in scraping just the links, we want to extract as much data as possible. As you remember when we hovered the mouse cursor over ```<tr ...>``` tag a lot has been highlighted. Not only the title, with a link, but also the number of replies, views etc.
 
 ```python
 import codecs
@@ -216,7 +216,7 @@ df.head()
         
 
 ## Step 3: scraping the individual posts
-This last step is not going to be much different than step 1 of scraping, we have to inspect one individual post and deduct which element of the page is responsible for the content of the first reply to the post. We're making an assumption that the most valuable content is going to be stored in the first reply to the published project. We'll ignore all the other replies.
+This last step is not going to be much different than step 1 of scraping, we have to inspect one individual post and deduct which element of the page is responsible for the content of the first reply to the post. We're assuming that the most valuable content is going to be stored in the first reply to the published project. We'll ignore all the other replies.
         
 To process this amount of text data we'll create a function. All the heavy data processing is being done inside the function and we don't have to worry about some variables occupying the memory after we're done working with them. **[[[FIND A GOOD ARTICLE ABOUT MEMORY LEAKS PASTE HERE]]]**  
         
@@ -274,12 +274,12 @@ def scrape_replies(df):
 df = scrape_replies(df)
 ```
 
-That's it, we've extracted all the raw data we've wanted from the dataquests websites. In the next post we'll focus on cleaning and analyzing this data using natural language processing techniques.  
+That's it, we've extracted all the raw data we've wanted from Dataquest's websites. In the next post, we'll focus on cleaning and analyzing this data using natural language processing techniques.  
 
 ## Things to consider:
 **Scraping tool**
 
-BeautifulSoup is a great library to start with, but you've probably noticed that we came across it's limitations, to perform web scraping on complex dynamic websites we should use a more advanced tool (We'll try to cover Selenium library in the future)
+BeautifulSoup is a great library to start with, but you've probably noticed that we came across its limitations, to perform web scraping on complex dynamic websites we should use a more advanced tool (We'll try to cover Selenium library in the future)
 
 **Consider the server**
 
@@ -287,11 +287,11 @@ If you're constantly requesting a LOT of content from a website, most of the ser
 ```python
 ConnectionError: HTTPSConnectionPool(host='en.wikipedia.orghttps', port=443): Max retries exceeded with url:[...]
 ```
-The important part is: **Max retries exceeded**. It means you've been requesting data too many times. It's a good habbit to stop the web-scraping every now and then to mimic natural human behavior, how do we do that? We need to smuggle this 1 line of code: 
+The important part is: **Max retries exceeded**. It means we've been requesting data too many times. It's a good habit to stop web-scraping every now and then to mimic natural human behaviour, how do we do that? We need to smuggle this 1 line of code: 
 ```python
 time.sleep(np.random.randint(1,20)) 
 ``` 
-This will pause our algorithm for a random number (1-20) of seconds, naturally that extends the amount of time it take to extract the data, but very often makes it possible. Remember that we need to put this one-liner in an adequote spot in our code:
+This will pause our algorithm for a random number (1-20) of seconds, naturally, that extends the amount of time it takes to extract the data, but makes it possible on the other hand. Remember that we need to put this one-liner in an adequate spot in our code:
 
 ```python
 # this lets scrape all the posts, not just 5 of them:
