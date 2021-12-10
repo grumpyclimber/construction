@@ -5,13 +5,13 @@ Do you share your projects in the Dataquest community? I do!  I have benefited a
 This article is the first post in a series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and be aware of regex usage in cleaning data. We'll focus on web scraping, so elementary HTML (language used for creating websites) is very helpful, but you should survive without it.
 
 ### Structure
-I have divided this project into three stages, all of them are not that complicated on their own, but combining them together may feel a bit overwhelming. Every stage will be covered in a seperate article:
+I have divided this project into three stages, all of them are not that complicated on their own, but combining them together may feel a bit overwhelming. Every stage will be covered in a separate article:
 
 * Part 1: Gather the data - We'll use the Beautiful Soup library to scrape all the necessary string values from the website and store them in a pandas dataframe. This is the part we'll discuss in this article.
 * Part 2: Clean and analyse the data - Web scraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into a more useful format and analyze it.
 * Part 3: Use machine learning models on the data. Why perform the analysis yourself, when you can send the machine to do that work for you? Expanding on our work from part 2, we'll test different machine learning approaches to analyse text data. 
 
-You can access all the projects files on [GitHub](https://github.com/grumpyclimber/portfolio/tree/main/ml/nlp_feedback). I'll be adding more files and fine tuning the existing ones as I publish the next articles.
+You can access all the projects files on [GitHub](https://github.com/grumpyclimber/portfolio/tree/main/ml/nlp_feedback). I'll be adding more files and fine-tuning the existing ones as I publish the next articles.
 
 Ready? Let's get to work:
 # Part 1 -  Web scraping for Natural Language Processing project
@@ -28,7 +28,7 @@ This is the main thread of Guided Projects. It contains all of our Guided Projec
 
 In this post, Michael published his project and Elena replied with some remarks to his work. We're interested in scraping only the content of Elena's remarks. It is not going to be as easy as scraping one website. We want to scrape a specific part of many websites, to which we don't have the links...yet. Here's the plan of attack:
 1. We don't have the links to all of the guided project posts - we need to extract them, which means we'll have to scrape the main thread of guided projects
-2. After scraping the main thread we'll create a dataframe containing posts, titles, links, views and number of replies
+2. After scraping the main thread we'll create a dataframe containing posts, titles, links, views and the number of replies
   * We'll filter out posts with no replies
 3. The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
 
@@ -69,8 +69,8 @@ The whole concept of webscraping is to extract (scrape) specific elements of a w
 ### Inspecting the website:
 
 We'll begin with inspecting the contents of the whole website: https://community.dataquest.io/c/share/guided-project/55
-We can use our browser for that, I personally use Chrome. Just hover your mouse above the title of the post right-click it and choose Inspect, (BUT pay attention! 
-I've chosen a post that's a few posts below the top - just in case the first posts has a different class). 
+We can use our browser for that, I use Chrome. Just hover your mouse above the title of the post right-click it and choose Inspect, (BUT pay attention! 
+I've chosen a post that's a few posts below the top - just in case the first post has a different class). 
 
 Now we can look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the ```<tr data-topic-id=...>``` and on the left side we can observe a big chunk of the website being highlighted:
 
@@ -105,7 +105,7 @@ len(list_all)
 ```
 \[Output]: 30
 
-Our list has only 30 elements! We were expecting a bigger number, what happened? Unfortunately we're trying to scrape a dynamic website. (a more [in depth article](https://www.zesty.io/mindshare/marketing-technology/dynamic-vs-static-websites/) on the matter). Dataquest loads only the first 30 posts when our browser opens the forums page, if we want to see more we have to scroll down. But how do we program our scraper to scroll down? [Selenium](https://selenium-python.readthedocs.io/) is a go-to solution for that issue but we're going to use something much simpler: 
+Our list has only 30 elements! We were expecting a bigger number, what happened? Unfortunately, we're trying to scrape a dynamic website. (a more [in depth article](https://www.zesty.io/mindshare/marketing-technology/dynamic-vs-static-websites/) on the matter). Dataquest loads only the first 30 posts when our browser opens the forums page, if we want to see more we have to scroll down. But how do we program our scraper to scroll down? [Selenium](https://selenium-python.readthedocs.io/) is a go-to solution for that issue but we're going to use something much simpler: 
 * scroll down to the bottom of the website
 * when we reach the end save the website as a file
 * instead of processing a link with BeautifulSoup, we'll process that file
@@ -288,7 +288,7 @@ def scrape_replies(df):
 df = scrape_replies(df)
 ```
 
-That's it, we've extracted all the raw data we wanted from Dataquest's websites. In the next post, we'll focus on cleaning and analyzing this data using natural language processing techniques. We'll try to find the most common patterns in the content of projects feedback. But before you go, here's a few things to think about:
+That's it, we've extracted all the raw data we wanted from Dataquest's websites. In the next post, we'll focus on cleaning and analyzing this data using natural language processing techniques. We'll try to find the most common patterns in the content of projects feedback. But before you go, here are a few things to think about:
 
 ## Things to consider:
 **Scraping tool**
@@ -324,7 +324,7 @@ If you're interested in other tricks in web scraping, [read this article](https:
 
 **Internet connection**
 
-Assuming that the server will let us extract all of that data, can your service provider handle it? The size of our dataframes is fairly small, but imagine performing this task on much bigger datasets. Hotspotting wifi from an iphone may not be an ideal solution. Maybe that data has already been extracted and the dataset is available online? I encourage you to post the dataset after you've scraped it, some people may not have such a good connection as you do. Alternatively you could use an environment with a better connection. While working on this project I've used Kaggle. I didn't have to worry about my slow connection, it was fast enough to connect to and work on Kaggle. All the web scraping was done trough their servers.
+Assuming that the server will let us extract all of that data, can your service provider handle it? The size of our dataframes is fairly small, but imagine performing this task on much bigger datasets. Hotspotting wifi from an iphone may not be an ideal solution. Maybe that data has already been extracted and the dataset is available online? I encourage you to post the dataset after you've scraped it, some people may not have such a good connection as you do. Alternatively, you could use an environment with a better connection. While working on this project I've used Kaggle. I didn't have to worry about my slow connection, it was fast enough to connect to and work on Kaggle. All the web scraping was done through their servers.
 
 **Memory usage**
 
@@ -332,7 +332,7 @@ Ok, so your connection can handle it, but can your laptop handle it? Our datafra
 
 **Is it legal?**
 
-There's a number of articles relating to this topic. You should read at least one or two and be aware of what you're doing. It is very important, especially when web scraping is being conducted for business activities. 
+There are several of articles relating to this topic. You should read at least one or two and be aware of what you're doing. It is very important, especially when web scraping is being conducted for business activities. 
 
 ## Any questions?
 
