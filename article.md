@@ -1,5 +1,3 @@
-# UNDER CONSTRUCTION:
-
 # NLP on guided projects feedback
 
 Do you share your projects in the Dataquest community? I do!  I have benefited a lot from various people sharing their insights on my work. As I've progressed, I've started giving back and showing other people what I would have done differently in their notebooks. I've even started writing a [generic post](https://github.com/grumpyclimber/portfolio/blob/main/ml/nlp_feedback/feedback.md) about the most important comments on our projects. To include more interesting content in my post, I've started looking at other users feedback to guided projects. **Wait a second... What if we combine all of the feedback data to every guided project in one dataset?**
