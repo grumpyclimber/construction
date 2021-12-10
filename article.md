@@ -319,3 +319,9 @@ Ok, so your connection can handle it, but can your laptop handle it? Our datafra
 **Is it legal?**
 
 There's a number of articles relating to this topic. You should read at least one or two and be aware of what you're doing. It is very important, especially when web scraping is being conducted for business activities. 
+
+## Any questions?
+
+Feel free to reach out and ask me anything:
+[Dataquest](https://community.dataquest.io/u/adam.kubalica/summary), [LinkedIn](https://www.linkedin.com/in/kubalica/), [GitHub](https://github.com/grumpyclimber/portfolio)
+
