@@ -276,22 +276,42 @@ df = scrape_replies(df)
 
 That's it, we've extracted all the raw data we've wanted from the dataquests websites. In the next post we'll focus on cleaning and analyzing this data using natural language processing techniques.  
 
-Things to consider:
-* scraping tool - BeautifulSoup is a great library to start with, but you've probably noticed that we've already came across it's limitations, to perform web scraping on complex dynamic websites we should use a more advanced tool (We'll try to cover Selenium library in the future)
-* memory usage
-* internet transfer
-* Consider the server if you're constantly requesting a LOT of content from a website, most of the servers will pick up on it and very often cut you off. In our specific example, we asked for a big chunk of data an  but it's a good habbit to stop the web-scraping 
+## Things to consider:
+**Scraping tool**
 
+BeautifulSoup is a great library to start with, but you've probably noticed that we came across it's limitations, to perform web scraping on complex dynamic websites we should use a more advanced tool (We'll try to cover Selenium library in the future)
+
+**Consider the server**
+
+If you're constantly requesting a LOT of content from a website, most of the servers will pick up on it and very often cut you off. In our specific example, we asked for a chunk of data and received it without any problems.  But it's common to run into some problems, most common one: 
+```python
+ConnectionError: HTTPSConnectionPool(host='en.wikipedia.orghttps', port=443): Max retries exceeded with url:[...]
 ```
+The important part is: **Max retries exceeded**. It means you've been requesting data too many times. It's a good habbit to stop the web-scraping every now and then to mimic natural human behavior, how do we do that? We need to smuggle this 1 line of code: 
+```python
+time.sleep(np.random.randint(1,20)) 
+``` 
+This will pause our algorithm for a random number (1-20) of seconds, naturally that extends the amount of time it take to extract the data, but very often makes it possible. Remember that we need to put this one-liner in an adequote spot in our code:
+
 ```python
 # this lets scrape all the posts, not just 5 of them:
 def scrape_replies(df):
     feedback_list = []
     for el in df['link']:
+        # go to sleep first, then do your work:
+        time.sleep(np.random.randint(1,20)) 
         feedback_list.append(get_reply(el))
     df['feedback'] = feedback_list
     return df
     
 df = scrape_replies(df)
 ```
-```
+If you're interested in other tricks in web scraping, [read this article](https://www.danielherediamejias.com/6-basic-tips-to-perform-web-scraping-with-python/).
+
+**Internet connection**
+
+Is it good enough to push all that data, through your local internet connection?
+
+**Memory usage**
+
+Ok, so your connection can handle it, but can your laptop handle it?
