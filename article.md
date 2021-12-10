@@ -11,7 +11,7 @@ I have divided this project into three stages, all of them are not that complica
 * Part 2: Clean and analyse the data - Web scraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into a more useful format and analyze it.
 * Part 3: Use machine learning models on the data. Why perform the analysis yourself, when you can send the machine to do that work for you? Expanding on our work from part 2, we'll test different machine learning approaches to analyse text data. 
 
-You can access all the projects files on [GitHub](https://github.com/grumpyclimber/portfolio/tree/main/ml/nlp_feedback). I'll be adding more files and fine-tuning the existing ones as I publish the next articles.
+You can access all the projects files on MY [GitHub](https://github.com/grumpyclimber/portfolio/tree/main/ml/nlp_feedback). I'll be adding more files and fine-tuning the existing ones as I publish the next articles.
 
 Ready? Let's get to work:
 # Part 1 -  Web scraping for Natural Language Processing project
