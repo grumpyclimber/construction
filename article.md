@@ -183,10 +183,10 @@ level="2" role="heading">
 <span aria-label="This topic has 0 replies" class="number">0</span>
 ```
 We could use BeautifulSoup to target those specific elements and extract their content, but this dataset is not that big and extracting the information
-we need directly from the cell in the same row seems like a bit safer option. 
-* We'll remove the first row (which is not a post element)
-* then we'll proceed with regex magic to extract the title, link and number of replies
-* we'll remove the rows with 0 replies
+we need directly from the cell in the same row seems like a bit safer option. We'll follow the below plan:
+* Remove the first row (which is not a post element)
+* Proceed with regex techniques to extract the title, link and number of replies (forgot regex tricks? [here's a cheatsheet](https://www.dataquest.io/blog/regex-cheatsheet/)
+* Remove the rows with 0 replies
 
 ```python
 # remove 1st row:
@@ -283,11 +283,11 @@ BeautifulSoup is a great library to start with, but you've probably noticed that
 
 **Consider the server**
 
-If you're constantly requesting a LOT of content from a website, most of the servers will pick up on it and very often cut you off. In our specific example, we asked for a chunk of data and received it without any problems.  But it's common to run into some problems, most common one: 
+If you're constantly requesting a LOT of content from a website, most of the servers will pick up on it and very often cut you off. Remember to start small. In our specific example, we asked for a chunk of data and received it without any problems.  But it's common to run into some problems, most common one: 
 ```python
 ConnectionError: HTTPSConnectionPool(host='en.wikipedia.orghttps', port=443): Max retries exceeded with url:[...]
 ```
-The important part is: **Max retries exceeded**. It means we've been requesting data too many times. It's a good habit to stop web-scraping every now and then to mimic natural human behaviour, how do we do that? We need to smuggle this 1 line of code: 
+The important part is: **Max retries exceeded**. It means we've been requesting data too many times. It's a good habit to stop web scraping every now and then to mimic natural human behaviour, how do we do that? We need to smuggle this 1 line of code: 
 ```python
 time.sleep(np.random.randint(1,20)) 
 ``` 
@@ -310,8 +310,12 @@ If you're interested in other tricks in web scraping, [read this article](https:
 
 **Internet connection**
 
-Is it good enough to push all that data, through your local internet connection?
+Assuming that the server will let us extract all of that data, can your service provider handle it? The size of our dataframes is fairly small, but imagine performing this task on much bigger datasets. Hotspotting wifi from an iphone may not be an ideal solution. Maybe that data has already been extracted and the dataset is available online? I encourage you to post the dataset after you've scraped it, some people may not have such a good connection as you do. Alternatively you could use an environment with a better connection. While working on this project I've used Kaggle. I didn't have to worry about my slow connection, it was fast enough to connect to and work on Kaggle. All the web scraping was done trough their servers.
 
 **Memory usage**
 
-Ok, so your connection can handle it, but can your laptop handle it?
+Ok, so your connection can handle it, but can your laptop handle it? Our dataframe is small, but always be prepared! If the size of the dataframe is close to your RAM size, then you have to start considering doing it in stages. Check your disk space, make sure that you need all that data.
+
+**Is it legal?**
+
+There's a number of articles relating to this topic. You should read at least one or two and be aware of what you're doing. It is very important, especially when web scraping is being conducted for business activities. 
