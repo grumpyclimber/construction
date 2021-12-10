@@ -5,38 +5,38 @@
 Do you share your projects in the Dataquest community? I do!  I have benefited a lot from various people sharing their insights on my work. As I've progressed, I've started giving back and showing other people what I would have done differently in their notebooks. I've even started writing a generic post about the most important comments on our projects. This led me to the idea of an interesting project: 
 * extract all the feedback data and gather it in one dataset
 * analyze the dataset
-* using machine learning to enhance the analysis. 
+* use machine learning to enhance the analysis. 
 
-This article is the first post in a series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and regex usage in cleaning data. We'll focus on web scraping so elementary HTML is very helpful, but you should survive without it.
+This article is the first post in a series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and regex usage in cleaning data. We'll focus on web scraping, so elementary HTML is very helpful, but you should survive without it.
 
 I have divided this project into three stages, all of them are not that complicated on their own. But as we combine them, it starts to look interesting:
 
 * Part 1: Scrape the data - we'll use the Beautiful Soup library to gather all the necessary string values from the website and store them in a pandas dataframe.
-* Part 2: Clean and analyse the data - we should be well accustomed to this part. Webscraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into something more useful.
-* Part 3: Use machine learning models on the data. Why perform the analysis yourself, when you can send the machine to do that work for you?
+* Part 2: Clean and analyse the data - we should be well accustomed to this part. Webscraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into a more useful format and analyze it.
+* Part 3: Use machine learning models on the data. Why perform the analysis yourself, when you can send the machine to do that work for you? Expanding on our work from part 2, we'll test different machine learning approaches to analyse text data. 
 
 Let's get to work:
 # Part 1 - scraping the data from Dataquest's community forum
-If you haven't used BeautifulSoup yet, then I encourage you to check my introduction notebook. It follows a similar path that we're going to take: scraping not one, but many websites. 
+If you haven't used BeautifulSoup yet, then I encourage you to check my introduction notebook. It follows a similar path that we're going to take: scraping not one, but many websites. Also, here's a bit more [in depth article](https://www.dataquest.io/blog/web-scraping-python-using-beautiful-soup/) on Dataquest introducing us to web scraping.
 
-Let's have a look at how the actual Guided project post looks, so we can have a better idea of what we want to achieve:
+Let's have a look at how the actual guided project post category looks, so we can have a better idea of what we want to achieve:
 
 <img width="942" alt="main" src="https://user-images.githubusercontent.com/87883118/144956101-27b15dc3-4ad2-473f-870a-faa241819d02.png">
 
-This is the main thread of Guided Projects. It contains all of our Guided Projects, that we've decided to publish. Most of them received a reply with some comments - we're interested in the contents of that reply:
+This is the main thread of Guided Projects. It contains all of our Guided Projects, that we've decided to publish. Most of them received a reply with some comments - we're interested in the contents of that reply, here's an example post:
 
 <img width="918" alt="feedback" src="https://user-images.githubusercontent.com/87883118/144956671-3c8dc0bc-1922-4a12-9c73-5e4b549d93af.png">
 
 
-In this post, Michael published his project and Elena replied with some remarks to his work. We're interested in scraping only the content of Elena's remarks. It is not going to be as easy as scraping one website, because we want to scrape a specific part of many websites, to which we don't have the links...yet. Here's the plan of attack:
-1. We don't have the links to all of the Guided project posts - we need to obtain them, which means we'll have to scrape the main thread of Guided Projects
-2. After scraping the main thread we'll create a dataframe containing posts, titles, links and... number of replies
+In this post, Michael published his project and Elena replied with some remarks to his work. We're interested in scraping only the content of Elena's remarks. It is not going to be as easy as scraping one website. We want to scrape a specific part of many websites, to which we don't have the links...yet. Here's the plan of attack:
+1. We don't have the links to all of the guided project posts - we need to extract them, which means we'll have to scrape the main thread of guided projects
+2. After scraping the main thread we'll create a dataframe containing posts, titles, links, views and number of replies
   * We'll filter out posts with no replies
 3. The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
 
 ## Very basic HTML intro:
 
-Before we start, have you ever seen a HTML code? It differs from Python. If you've never experienced HTML code, here's a very basic example of a table in HTML:
+Before we start, have you ever seen a HTML code? It differs from Python. If you've never experienced HTML code, here's a **very** basic example of a table in HTML:
 ```html
 <html>
 <body>
@@ -274,7 +274,7 @@ def scrape_replies(df):
 df = scrape_replies(df)
 ```
 
-That's it, we've extracted all the raw data we've wanted from Dataquest's websites. In the next post, we'll focus on cleaning and analyzing this data using natural language processing techniques.  
+That's it, we've extracted all the raw data we wanted from Dataquest's websites. In the next post, we'll focus on cleaning and analyzing this data using natural language processing techniques. We'll try to find the most common patterns in the content of projects feedback. But before you go, here's a few things to think about:
 
 ## Things to consider:
 **Scraping tool**
