@@ -7,7 +7,7 @@ This article is the first post in a series of posts describing my project. To re
 ### Structure
 I have divided this project into three stages, all of them are not that complicated on their own, but combining them together may feel a bit overwhelming. Every stage will be covered in a separate article:
 
-* Part 1: Gather the data - We'll use the Beautiful Soup library to scrape all the necessary string values from the website and store them in a pandas dataframe. This is the part we'll discuss in this article.
+* Part 1: Gather the data - We'll use the BeautifulSoup library to scrape all the necessary string values from the website and store them in a pandas dataframe. This is the part we'll discuss in this article.
 * Part 2: Clean and analyse the data - Web scraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into a more useful format and analyze it.
 * Part 3: Use machine learning models on the data. Why perform the analysis yourself, when you can send the machine to do that work for you? Expanding on our work from part 2, we'll test different machine learning approaches to analyse text data. 
 
