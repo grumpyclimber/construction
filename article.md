@@ -17,7 +17,7 @@ I have divided this project into three stages, all of them are not that complica
 
 Let's get to work:
 # Part 1 - scraping the data from Dataquest's community forum
-If you haven't used BeautifulSoup yet, then I encourage you to check my introduction notebook. It follows a similar path that we're going to take: scraping not one, but many websites. Also, here's a bit more [in depth article](https://www.dataquest.io/blog/web-scraping-python-using-beautiful-soup/) on Dataquest introducing us to web scraping.
+If you haven't used BeautifulSoup yet, then I encourage you to check my [introduction notebook](https://github.com/grumpyclimber/portfolio/tree/main/other/wiki_scrape). It follows a similar path that we're going to take: scraping not one, but many websites. Also, here's a bit more [in depth article](https://www.dataquest.io/blog/web-scraping-python-using-beautiful-soup/) on Dataquest introducing us to web scraping.
 
 Let's have a look at how the actual guided project post category looks, so we can have a better idea of what we want to achieve:
 
