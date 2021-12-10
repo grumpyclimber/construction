@@ -1,22 +1,22 @@
 # UNDER CONSTRUCTION:
 
-# Title
+# NLP on guided projects feedback
 
-Do you share your projects in the Dataquest community? I do!  I have benefited a lot from various people sharing their insights on my work. As I've progressed, I've started giving back and showing other people what I would have done differently in their notebooks. I've even started writing a generic post about the most important comments on our projects. This led me to the idea of an interesting project: 
-* extract all the feedback data and gather it in one dataset
-* analyze the dataset
-* use machine learning to enhance the analysis. 
+Do you share your projects in the Dataquest community? I do!  I have benefited a lot from various people sharing their insights on my work. As I've progressed, I've started giving back and showing other people what I would have done differently in their notebooks. I've even started writing a [generic post](https://github.com/grumpyclimber/portfolio/blob/main/ml/nlp_feedback/feedback.md) about the most important comments on our projects. To include more interesting content in my post, I've started looking at other users feedback to guided projects. **Wait a second... What if we combine all of the feedback data to every guided project in one dataset?**
 
-This article is the first post in a series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and regex usage in cleaning data. We'll focus on web scraping, so elementary HTML is very helpful, but you should survive without it.
+This article is the first post in a series of posts describing my project. To really benefit from this article you should have a good understanding of pandas library and be aware of regex usage in cleaning data. We'll focus on web scraping, so elementary HTML (language used for creating websites) is very helpful, but you should survive without it.
 
-I have divided this project into three stages, all of them are not that complicated on their own. But as we combine them, it starts to look interesting:
+### Structure
+I have divided this project into three stages, all of them are not that complicated on their own, but combining them together may feel a bit overwhelming. Every stage will be covered in a seperate article:
 
-* Part 1: Scrape the data - we'll use the Beautiful Soup library to gather all the necessary string values from the website and store them in a pandas dataframe.
-* Part 2: Clean and analyse the data - we should be well accustomed to this part. Webscraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into a more useful format and analyze it.
+* Part 1: Gather the data - We'll use the Beautiful Soup library to scrape all the necessary string values from the website and store them in a pandas dataframe. This is the part we'll discuss in this article.
+* Part 2: Clean and analyse the data - Web scraping very often delivers 'dirty' text values. It is normal for the scraper to pick up a few extra signs or lines of HTML during the process. We'll use regular expression techniques to transform that data into a more useful format and analyze it.
 * Part 3: Use machine learning models on the data. Why perform the analysis yourself, when you can send the machine to do that work for you? Expanding on our work from part 2, we'll test different machine learning approaches to analyse text data. 
 
-Let's get to work:
-# Part 1 - scraping the data from Dataquest's community forum
+You can access all the projects files on [GitHub](https://github.com/grumpyclimber/portfolio/tree/main/ml/nlp_feedback). I'll be adding more files and fine tuning the existing ones as I publish the next articles.
+
+Ready? Let's get to work:
+# Part 1 -  Web scraping for Natural Language Processing project
 If you haven't used BeautifulSoup yet, then I encourage you to check my [introduction notebook](https://github.com/grumpyclimber/portfolio/tree/main/other/wiki_scrape). It follows a similar path that we're going to take: scraping not one, but many websites. Also, here's a bit more [in depth article](https://www.dataquest.io/blog/web-scraping-python-using-beautiful-soup/) on Dataquest introducing us to web scraping.
 
 Let's have a look at how the actual guided project post category looks, so we can have a better idea of what we want to achieve:
@@ -34,9 +34,9 @@ In this post, Michael published his project and Elena replied with some remarks 
   * We'll filter out posts with no replies
 3. The remaining dataset should contain only the posts that received feedback and the links to those posts - we can commence scraping the actual individual posts
 
-## Very basic HTML intro:
+## Very basic HTML introduction:
 
-Before we start, have you ever seen a HTML code? It differs from Python. If you've never experienced HTML code, here's a **very** basic example of a table in HTML:
+Before we start, I have to ask: have you ever seen a HTML code? It differs from Python. If you've never experienced HTML code, here's a **very** basic example of a table in HTML:
 ```html
 <html>
 <body>
@@ -66,7 +66,9 @@ In HTML we use tags to define elements. Many elements have an opening tag and a 
 
 The whole concept of webscraping is to extract (scrape) specific elements of a website.
 
-## Step 1:
+## Step 1: web scraping the main thread of guided projects 
+
+### Inspecting the website:
 
 We'll begin with inspecting the contents of the whole website: https://community.dataquest.io/c/share/guided-project/55
 We can use our browser for that, I personally use Chrome. Just hover your mouse above the title of the post right-click it and choose Inspect, (BUT pay attention! 
@@ -75,6 +77,8 @@ I've chosen a post that's a few posts below the top - just in case the first pos
 Now we can look at the code of the website, when you hover your mouse cursor above certain elements of the code in the right window, the browser will highlight that element in the left window, in the below example my cursor is hovering above the ```<tr data-topic-id=...>``` and on the left side we can observe a big chunk of the website being highlighted:
 
 <img width="1092" alt="inspect" src="https://user-images.githubusercontent.com/87883118/145134328-abb52874-0bc5-4bc9-a952-662d44fe00d6.png">
+
+### First attempts at web scraping:
 
 For our first attempt we'll try to obtain only the links of every post. You can notice that the actual link has a class 'title raw-link raw-topic-link', it's in the second line of the code below:
 
@@ -167,6 +171,8 @@ likes">\n</td>\n<td class="num views"><span class="number" title="this topic has
  <a class="post-activity" href="https://community.dataquest.io/t/analyzing-cia-factbook-with-sql-full-project/558357/1">
   <span class="relative-date" data-format="tiny" data-time="1637360860367">1d</span></a>\n</td>\n</tr>
 ```
+### Extracting the data from HTML:
+
 How to find order in this madness? We only need 2 elements from the above code (but we'll try to extract more).
 The title in the above block of code is "Analyzing CIA Factbook with SQL - Full Project", we can find the title inside the span element:
 ```html
@@ -178,14 +184,19 @@ The previous element is the link we're after:
 raw-topic-link" data-topic-id="558357" href="https://community.dataquest.io/t/analyzing-cia-factbook-with-sql-full-project/558357"
 level="2" role="heading">
  ```
- The last bit of information we're after is number of replies for each post:
+Number of views should be a usefull:
+```html
+><span class="number" title="this topic has been viewed 9 times">9</span>
+```
+ 
+The last bit of information we're after is the number of replies for each post:
 ```html
 <span aria-label="This topic has 0 replies" class="number">0</span>
 ```
 We could use BeautifulSoup to target those specific elements and extract their content, but this dataset is not that big and extracting the information
 we need directly from the cell in the same row seems like a bit safer option. We'll follow the below plan:
 * Remove the first row (which is not a post element)
-* Proceed with regex techniques to extract the title, link and number of replies (forgot regex tricks? [here's a cheatsheet](https://www.dataquest.io/blog/regex-cheatsheet/)
+* Proceed with regex techniques to extract the title, link, number of replies and number of views (forgot regex tricks? [here's a cheatsheet](https://www.dataquest.io/blog/regex-cheatsheet/))
 * Remove the rows with 0 replies
 
 ```python
@@ -218,7 +229,7 @@ df.head()
 ## Step 3: scraping the individual posts
 This last step is not going to be much different than step 1 of scraping, we have to inspect one individual post and deduct which element of the page is responsible for the content of the first reply to the post. We're assuming that the most valuable content is going to be stored in the first reply to the published project. We'll ignore all the other replies.
         
-To process this amount of text data we'll create a function. All the heavy data processing is being done inside the function and we don't have to worry about some variables occupying the memory after we're done working with them. **[[[FIND A GOOD ARTICLE ABOUT MEMORY LEAKS PASTE HERE]]]**  
+To process this amount of text data we'll create a function. All the heavy data processing is being done inside the function and we don't have to worry about some variables occupying the memory after we're done working with them.   
         
 ```python
 # create a function for scraping the actual posts website:
@@ -231,6 +242,7 @@ def get_reply(one_link):
     feedback = tag_numbers[1].text
     return feedback
 ```
+### Testing the scraper
 Here's a very important rule I follow whenever performing web-scraping:
 START SMALL!
 
@@ -261,7 +273,11 @@ df_test['feedback'][4]
 ```
 '\nprocessing data inside a function saves memory (the variables you create stay inside the function and are not stored in memory, when you’re done with the function) it’s important when you’re working with larger datasets - if you’re interested with experimenting:\nhttps://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page\nTry cleaning 1 month of this dataset on kaggle notebook (and look at your RAM usage) outside the function and inside the function, compare the RAM usage in both examples\n'
 
-Whole reply, ready for cleaning. Now let's move on to a bigger boat (this will take a while):
+Whole reply, ready for cleaning. 
+
+### Scraping all of the feedback
+
+Now let's move on to a bigger boat (this will take a while):
 ```python
 # this lets scrape all the posts, not just 5 of them:
 def scrape_replies(df):
