@@ -114,7 +114,7 @@ Let's get to scrolling down:
 
 ![20211207_132125](https://user-images.githubusercontent.com/87883118/145162982-e907978a-5ff0-49ca-8830-f377618ddb52.jpg)
 
-Yes, that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffee cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... Now we can load that file into our notebook and commence scraping, this time we'll target every new row ```tr```. Because ultimately we're not interested in scraping just the links, we want to extract as much data as possible. As you remember when we hovered the mouse cursor over ```<tr ...>``` tag a lot has been highlighted. Not only the title, with a link, but also the number of replies, views etc.
+Yes, that is an actual fork pushing down the 'down arrow' on the keyboard, weighted down with an empty coffee cup (the author of this post does not encourage any unordinary use of cutlery or dishware around your electronic equipment). Having scrolled down to the very bottom, we can save the website using > File > Save Page As... Now we can load that file into our notebook and commence scraping, this time we'll target every new row ```<tr>```. Because ultimately we're not interested in scraping just the links, we want to extract as much data as possible. As you remember when we hovered the mouse cursor over ```<tr ...>``` tag a lot has been highlighted. Not only the title, with a link, but also the number of replies, views etc.
 
 ```python
 import codecs
