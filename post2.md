@@ -5,7 +5,7 @@ In our [previous post](link){FIX  LINK!!!} we've learned how to perform web scra
 * we've extracted the title, link to the post, number of replies and number of views of each post
 * we've also scrapped the post's website - specifically, we've targeted the first reply to the post
 
-This is where we'll continue our work. In this post we'll clean and analyse the text data. We'll start small: cleaning and organising the title data, then we'll perform some small amount of data analysis for each title (views, replies). We're mostly going to show the potential and quickly move on.
+This is where we'll continue our work. In this post we'll clean and analyse the text data. We'll start small: cleaning and organising the title data, then we'll perform some small amount of data analysis for each titles numeric (views, replies). We're mostly going to show the potential and quickly move on.
 
 After that little warm-up session, we'll move to the main dish: processing and analysing the feedback posts. We'll use various Natural Language Processing techniques to analyse the content of the feedback:
 * Tokenization
@@ -54,14 +54,12 @@ def remove_punctuations(text):
 # apply the function:
 df['title'] = df['title'].apply(remove_punctuations)    
 ```
-Notice how we've imported a list of punctuation signs from 'string' package instead of creating a list and filling it manually with all those signs.
-We're going to use this method more frequently, as it's just
-faster and easier. 
+Notice how we've imported a list of punctuation signs from 'string' package instead of creating a list and filling it manually with all those signs? We're going to use this method more frequently, as it's just faster and easier. 
 
 Let's not forget that, the above approach is a basic and easy to 
 understand function. It is not the most efficient method, if your
 dataset is very large, you should check [stackoverflow](https://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string)
-for a better way.
+for a better solution.
 
 ### Stopwords
 
@@ -113,7 +111,7 @@ len(df['title_nostop'].unique())
 ```
 >\[Output]: 927
 
-That's still a very high number, compared to the expected 20-30 titles.
+That's still a very large number, compared to the expected 20-30 titles.
 We're going to have to get creative!
 
 ## Using the tag number
@@ -126,7 +124,7 @@ df['content'][1]
 '<tr class="topic-list-item category-share-guided-project tag-python tag-pandas tag-469 tag-data-analysis-business tag-469-11 has-excerpt ember-view" data-topic-id="558226" id="ember77">\n<td class="main-link clearfix" colspan="">\n<div class="topic-details">\n<div class="topic-title">\n<span class="link-top-line">\n<a class="title raw-link raw-topic-link" data-topic-id="558226" href="https://community.dataquest.io/t/re-upload-project-feedback-popular-data-science-questions/558226/2" level="2" role="heading"><span dir="ltr">[Re-upload]Project Feedback - Popular Data Science Questions</span></a>\n<span class="topic-post-badges"></span>\n</span>\n</div>\n<div class="discourse-tags"><a class="discourse-tag bullet" data-tag-name="python" href="https://community.dataquest.io/tag/python">python</a> <a class="discourse-tag bullet" data-tag-name="pandas" href="https://community.dataquest.io/tag/pandas">pandas</a> <a class="discourse-tag bullet" data-tag-name="469" href="https://community.dataquest.io/tag/469">469</a> <a class="discourse-tag bullet" data-tag-name="data-analysis-business" href="https://community.dataquest.io/tag/data-analysis-business">data-analysis-business</a> <a class="discourse-tag bullet" data-tag-name="469-11" href="https://community.dataquest.io/tag/469-11">469-11</a> </div>\n<div class="actions-and-meta-data">\n</div>\n</div></td>\n<td class="posters">\n<a class="" data-user-card="kevindarley2024" href="https://community.dataquest.io/u/kevindarley2024"><img alt="" aria-label="kevindarley2024 - Original Poster" class="avatar" height="25" src="./Latest Share_Guided Project topics - Dataquest Community_files/50(1).png" title="kevindarley2024 - Original Poster" width="25"/></a>\n<a class="latest" data-user-card="jesmaxavier" href="https://community.dataquest.io/u/jesmaxavier"><img alt="" aria-label="jesmaxavier - Most Recent Poster" class="avatar latest" height="25" src="./Latest Share_Guided Project topics - Dataquest Community_files/50(2).png" title="jesmaxavier - Most Recent Poster" width="25"/></a>\n</td>\n<td class="num posts-map posts" title="This topic has 3 replies">\n<button class="btn-link posts-map badge-posts">\n<span aria-label="This topic has 3 replies" class="number">3</span>\n</button>\n</td>\n<td class="num likes">\n</td>\n<td class="num views"><span class="number" title="this topic has been viewed 47 times">47</span></td>\n<td class="num age activity" title="First post: Nov 14, 2021 2:57 am\nPosted: Nov 18, 2021 6:38 pm">\n<a class="post-activity" href="https://community.dataquest.io/t/re-upload-project-feedback-popular-data-science-questions/558226/4"><span class="relative-date" data-format="tiny" data-time="1637221085326">3d</span></a>\n</td>\n</tr>'
 ```
 
-Using that knowledge, we can extract the tag numbers whenever it's
+Every lesson with a guided project has an uniqued number. Most of the published projects are tagged with those numbers. Using that knowledge, we can extract the tag numbers whenever it's
 possible:
 ```python
 df['tag'] = df['content'].str.extract('data-tag-name="(\d+)" href')
@@ -224,8 +222,7 @@ df[df['tag'].isnull()].shape
 ```
 >\[Output]: (59, 8)
 
-We can remove 59 rows to have a consistent dataset, while we're doing that
-let's remove the original 'title', column:
+We can remove 59 rows to have a consistent dataset, while we're doing that let's remove the original 'title', column:
 ```python
 df = df[~(df['tag'].isnull())].copy()
 df = df.drop(columns='title')
@@ -237,8 +234,7 @@ too much. After all '294' doesn't tell us much, but 'ebay' already
 gives us a clue about the project. But 1 word is sometimes not enough,
 so let's check the most common 2 words for each lesson number,
 and create a column for them. Naturally sometimes that combination,
-is not going to be in the desired order, but it will clearly point to the 
-topic of the project. 
+is not going to be in the desired order, but it will clearly point to the topic of the project. 
 
 There's one catch: we can only do that with the first
 29 lesson numbers, the rest of them occur only once, so we can't
@@ -326,8 +322,7 @@ sure the order of words is logical so we don't get any more
 
 We could do all of that and more, but this is not the time or place to do that.
 This post is aimed at NLP techniques and we haven't covered them 
-thoroughly yet. That's why we'll skip the exploratory data analysis of pure 
-numbers and move on to part 3.
+thoroughly yet. That's why we'll skip the exploratory data analysis of numeric data and move on to part 3.
 
 # Part 3: Feedback analysis using NLP techniques
 
@@ -432,8 +427,7 @@ popular_words(df['feedback_clean2'])
 We could continue the process of eliminating words that don't give us any important information ('thanks', 'great', 'happy') or try a different approach. But before we do that, let's learn how to tokenize the text.
 
 ## Tokenization
-**Many NLP techniques require an input of tokenized strings.** What is tokenization?
-In essence, it's splitting a string into smaller units (tokens). 
+**Many NLP techniques require an input of tokenized strings.** What is tokenization? In essence, it's splitting a string into smaller units (tokens). 
 The most common method is word tokenizing. Here's a simple example:
 ```python
 from nltk.tokenize import word_tokenize
@@ -601,10 +595,13 @@ pos_tag(word_tokenize('You should add more color.'))
 We're interested only in 'add more color' part, which is tagged as VB,
 JJR and NN. (Verb, comparative adjective and noun). How do we target
 only the specific parts of our text? Here's the battle plan:
+
 1. We'll save a short paragraph to a variable, this paragraph 
 will include our desired grammar structure (similar to 'add more color')
 2. We'll tokenize that variable, then we'll tag parts of speech
+
 Here comes the new part:
+
 3. Name the structure we're after (eg. 'target_phrase') and use
 POS tags to specify what are we looking for
 4. Parse the paragraph and print the results
