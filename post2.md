@@ -911,13 +911,14 @@ computationally way cheaper, but the results aren't as good. If you're intereste
 read this thread on StackOverflow: [stemming vs lemmatization](https://stackoverflow.com/questions/1787110/what-is-the-difference-between-lemmatization-vs-stemming)
 
 # Final word
-If you feel like that was a lot to take it, let's remind a few key aspects:
-* remember to properly clean the text data
+If you feel like that was a lot to take it, let's remember a few key aspects:
+* properly clean the text data
 
     * apply lowercase
     * remove stopwords
     * remove punctuation
     * keep both the original text and cleaned version (or versions)
+    
 * tokenize the text data
 * use stemming or lemmatization (remember proper lemmatization requires POS tagging)
 * depending on dataset size/ goal/ memory availability you can check
