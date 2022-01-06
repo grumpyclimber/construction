@@ -1,3 +1,5 @@
+![post2_plot1](https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)
+  
 # Intro
 This is a second article on the topic of guided projects feedback analysis. The main idea of the topic is to analyse the responses students are receiving on the forum page. Dataquest encourages its students to publish their guided projects on their forum, after publishing other students or staff members can share their opinion of the project. We're interested in the content of those opinions.
 
@@ -25,7 +27,7 @@ We're all guilty: we want to publish our project and gain attention. What's the 
 We know for a fact, that the amount of different projects is closer to 20 or 30. So let's try to group those posts by their content.
 
 ## Lowercase, punctuation and stopwords
- Before we move on to some cleaning duties, let's remind ourselves with a simple fact:
+ Before we move on to some cleaning duties, let's remind ourselves a simple fact:
 
 ```python
 'ebay' == 'Ebay'
@@ -312,15 +314,14 @@ here are a few ideas for more plots:
 We can also keep on extracting data from the original chunk of html, that
 we've scraped - we can still extract dates and track the popularity of topics throughout the time. 
 
-Another potential approach is to categorize the projects into different
-levels of skill level and track all the metrics based on difficulty 
-level of the project.
+Another potential approach is to categorize the projects into different skill levels and track all the metrics based on the difficulty 
+of the project.
 
 Before we do all of the above we should organize the titles - make
 sure the order of words is logical so we don't get any more
 'wars star' cases.
 
-We could do all of that and more, but this is not the time or place to do that.
+We could do all of that and more, but this is not the time or place to do so.
 This post is aimed at NLP techniques and we haven't covered them 
 thoroughly yet. That's why we'll skip the exploratory data analysis of numeric data and move on to part 3.
 
@@ -336,7 +337,7 @@ df['feedback'][0]
 '\nprocessing data inside a function saves memory (the variables you create stay inside the function and are not stored in memory, when you’re done with the function) it’s important when you’re working with larger datasets - if you’re interested with experimenting:\nhttps://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page\nTry cleaning 1 month of this dataset on kaggle notebook (and look at your RAM usage) outside the function and inside the function, compare the RAM usage in both examples\n'
 ```
 
-Let' start with removing the unnecessary HTML code and lowering 
+Let's start with removing the unnecessary HTML code and lowering 
 all letters. In the next step we'll expand all the contractions (expand don't 
 into do not etc.), we'll use a handy [contractions package](https://github.com/kootenpv/contractions)
 for that. After that, we'll remove the punctuations and 
@@ -460,10 +461,12 @@ By now you've probably noticed that we've imported some packages from nltk libra
 
 ## N-grams
 So why did we split all those texts into lists anyway? Well as mentioned, many NLP techniques require an input of tokenized text. Let's start with N-grams. N-gram is a sequence of N words, we can have:
-* unigram 'computer'
+* unigram: 'computer'
 * bigram: 'fast computer'
 * trigram: 'very fast computer'
+
 etc.
+
 Having amassed more than 1000 feedback posts, we hope to see some of the n-grams occur more often, which should indicate our common mistakes in the shared projects. 
 
 ```python
@@ -489,7 +492,7 @@ Have you noticed that we had to pass a tokenized text into the ngrams function?
  (('guide', 'community', 'helpful'), 25),
  (('community', 'helpful', 'difficulty'), 25)]
 ```
-Unfortunately, a lot of the n-grams are some very positive variations of congratulations and compliments, it's very nice but it doesn't give us any information in relation to the content of the feedback. If we could filter out only certain n-grams, we would get a better picture. We're assuming that n-grams starting with the words like: 'consider', 'make' or 'use' should be very interesting to us. On the other hand, if a n-gram contains words like 'happy', 'congratulations' or 'community' it serves no purpose to us. This shouldn't be that hard as we can pass the collections.Counter output into a pandas Dataframe:
+Unfortunately, a lot of the n-grams are some positive variations of congratulations and compliments, it's very nice but it doesn't give us any information in relation to the content of the feedback. If we could filter out only certain n-grams, we would get a better picture. We're assuming that n-grams starting with the words like: 'consider', 'make' or 'use' should be very interesting to us. On the other hand, if a n-gram contains words like 'happy', 'congratulations' or 'community' it serves no purpose to us. This shouldn't be that hard as we can pass the collections.Counter output into a pandas Dataframe:
 
 ```python
 f4grams = ngrams(word_tokenize(df['feedback_clean2'].sum()), 4)
@@ -907,9 +910,30 @@ We haven't covered a baby brother of lemmatization: stemming. It's
 computationally way cheaper, but the results aren't as good. If you're interested in how they differ,
 read this thread on StackOverflow: [stemming vs lemmatization](https://stackoverflow.com/questions/1787110/what-is-the-difference-between-lemmatization-vs-stemming)
 
+# Final word
+If you feel like that was a lot to take it, let's remind a few key aspects:
+* remember to properly clean the text data
 
-# Further ideas
-* group the projects into 2 - 3 difficulty levels so we can analyse most
-common n-grams, POS etc. in beginner/ advanced projects and how they differ
+    * apply lowercase
+    * remove stopwords
+    * remove punctuation
+    * keep both the original text and cleaned version (or versions)
+* tokenize the text data
+* use stemming or lemmatization (remember proper lemmatization requires POS tagging)
+* depending on dataset size/ goal/ memory availability you can check
+    * most popular words
+    * common n-grams
+    * look for specific grammar structures based on POS tagging
+
+
+# Further work
+If you're still starving for some more coding experience here's a few ideas to consider:
+* group the projects into 2 - 3 difficulty levels so we can analyse most common n-grams, POS etc. in beginner/ advanced projects and how they differ
 * redo the n-grams analysis after lemmatization
-* consider how much time and computational power each method takes
+* consider how much time and computational power each method takes - after you've considere it - do the actual calculations
+
+## Any questions?
+
+Feel free to reach out and ask me anything:
+[Dataquest](https://community.dataquest.io/u/adam.kubalica/summary), [LinkedIn](https://www.linkedin.com/in/kubalica/), [GitHub](https://github.com/grumpyclimber/portfolio)
+
