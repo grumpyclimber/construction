@@ -577,7 +577,8 @@ nltk.help.upenn_tagset()
 ```
 ...or check [this article](https://medium.com/@gianpaul.r/tokenization-and-parts-of-speech-pos-tagging-in-pythons-nltk-library-2d30f70af13b)
 
-We can tag each word, so let's try looking for specific patterns! What are we looking for then? 
+## Chunking 
+We can tag each word, so let's try looking for specific patterns a.k.a. chunks! What are we looking for then? 
 One of the recurring themes in many feedback posts is a suggestion 
 to add/change something. How do we grammatically structure that
 sentence? Let's check! 
@@ -600,12 +601,12 @@ JJR and NN. (Verb, comparative adjective and noun). How do we target
 only the specific parts of our text? Here's the battle plan:
 
 1. We'll save a short paragraph to a variable, this paragraph 
-will include our desired grammar structure (similar to 'add more color')
+will include our desired chunk grammar (similar to 'add more color')
 2. We'll tokenize that variable, then we'll tag parts of speech
 
 Here comes the new part:
 
-3. Name the structure we're after (eg. 'target_phrase') and use
+3. Name the chunk we're after (eg. 'target_phrase') and use
 POS tags to specify what are we looking for
 4. Parse the paragraph and print the results
 
@@ -652,7 +653,7 @@ print(result)
   always/RB
   right/RB)
 ```
-What if we're only interested in the phrase we're after? We don't
+What if we're only interested in the chunk we're after? We don't
 want to display the whole text! We'll have a lot of text in our feedback posts!
 ```python
 target_chunks = []
@@ -666,7 +667,7 @@ print(target_chunks)
 [(('add', 'VB'), ('more', 'JJR'), ('information', 'NN'))]
 ```
 Ok, that solves the problem. Now the last thing we want to do is to
-count the number of times our phrase popped up in the text:
+count the number of times our chunk popped up in the text:
 
 ```python
 from collections import Counter
@@ -685,7 +686,7 @@ print(chunk_counter)
 Counter({(('add', 'VB'), ('more', 'JJR'), ('information', 'NN')): 1})
 ```
 
-Having done Part of Speach tagging on a small paragraph, let's move
+Having done Part of Speach tagging and chunking on a small paragraph, let's move
 on to a bigger set: all of the feedback posts. We'll follow a similar
 path to analyse the feedback posts. To make it easier to 
 analyse different texts and POS patterns, we'll create 3 seperate 
@@ -718,7 +719,7 @@ feedback posts:
 all_feedback = df['feedback'].sum()
 all_feedback_tagged = prep_text(all_feedback)
 ```
-The second function will parse trough all of the tagged text data and look for a specific POS pattern we'll provide, if tags of the words will match the provided pattern it will tag a sequence of those words with a label.
+The second function will parse trough all of the tagged text data and look for a specific chunk grammar we'll provide, if tags of the words will match the provided pattern it will tag the chunk with a label.
 
 
 ```python
@@ -735,7 +736,7 @@ def parser(regex_pattern, pos_tagged):
 chunked_text = parser("bingo: {<VB|NN|NNP><JJR><NN|NNS>}",all_feedback_tagged)
 ```
 
-The last function will filter out only the grammar structures we're after and count how many times they occur, it will display the top 10: 
+The last function will filter out only the chunks we're after and count how many times they occur, it will display the top 10: 
 
 ```python
 def chunk_counter(chunked_sentences):
@@ -918,7 +919,6 @@ If you feel like that was a lot to take it, let's remember a few key aspects:
     * remove stopwords
     * remove punctuation
     * keep both the original text and cleaned version (or versions)
-    
 * tokenize the text data
 * use stemming or lemmatization (remember proper lemmatization requires POS tagging)
 * depending on dataset size/ goal/ memory availability you can check
