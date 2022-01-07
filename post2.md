@@ -13,6 +13,7 @@ After that little warm-up session, we'll move to the main dish: processing and a
 * Tokenization
 * N-grams
 * Part of Speach tagging
+* Chunking
 * Lemmatization
 
 We'll use all of the above. **Our main goal is to understand what feedback is being provided. We're specifically interested in the technical advice regarding our projects.** Instead of sentiment analysis we're more interested in what technical remarks are most common. 
@@ -924,7 +925,7 @@ If you feel like that was a lot to take it, let's remember a few key aspects:
 * depending on dataset size/ goal/ memory availability you can check
     * most popular words
     * common n-grams
-    * look for specific grammar structures based on POS tagging
+    * look for specific grammar chunks
 
 
 # Further work
