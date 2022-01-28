@@ -163,7 +163,7 @@ jupyter notebook file    14
 first code cell          13
 dtype: int64
 ```
-# topic modelling
+# Topic modelling
 
 Topic modelling can quickly give us an insight into the content of the text. Unlike extracting keywords from the text, topic modelling is a much more advanced tool that can be tweaked to our needs.
 
