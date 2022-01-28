@@ -1,4 +1,5 @@
-# Intro
+# Using Machine Learning and Natural Language Processing tools for text analysis
+
 This is a third article on the topic of guided projects feedback analysis. The main idea of the topic is to analyse the responses students are receiving on the forum page. Dataquest encourages its students to publish their guided projects on their forum, after publishing other students or staff members can share their opinion of the project. We're interested in the content of those opinions.
 
 In our [previous post](https://www.dataquest.io/blog/how-to-clean-and-prepare-your-data-for-analysis/) we've done a basic data analysis of numerical data and dove deep into analysing the text data of feedback posts. 
